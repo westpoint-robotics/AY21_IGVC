@@ -1,0 +1,602 @@
+nuvo
+    description: Notebook
+    product: Nuvo-6108GC (Skylake-S)
+    vendor: Neousys Technology Inc.
+    version: Rev. A1
+    serial: BNV61080I3001115
+    width: 64 bits
+    capabilities: smbios-2.8 dmi-2.8 vsyscall32
+    configuration: administrator_password=disabled boot=normal chassis=notebook family=Nuvo-6108GC Series sku=Skylake-S uuid=A67132C1-7A54-4C4B-A2DC-9925B817F277
+  *-core
+       description: Motherboard
+       product: NVS-6108
+       vendor: Neousys Technology Inc.
+       physical id: 0
+       version: Rev. A1
+       serial: BNV61080I3001115
+       slot: N/A
+     *-firmware
+          description: BIOS
+          vendor: INSYDE Corp.
+          physical id: 0
+          version: Build180829
+          date: 08/29/2018
+          size: 128KiB
+          capacity: 7104KiB
+          capabilities: pci upgrade shadowing cdboot bootselect edd int13floppynec int13floppytoshiba int13floppy360 int13floppy1200 int13floppy720 int13floppy2880 int9keyboard int10video acpi usb biosbootspecification uefi
+     *-cpu
+          description: CPU
+          product: Intel(R) Xeon(R) CPU E3-1275 v5 @ 3.60GHz
+          vendor: Intel Corp.
+          physical id: 4
+          bus info: cpu@0
+          version: Intel(R) Xeon(R) CPU E3-1275 v5 @ 3.60GHz
+          serial: To Be Filled By O.E.M.
+          slot: U3E1
+          size: 3860MHz
+          capacity: 4005MHz
+          width: 64 bits
+          clock: 100MHz
+          capabilities: x86-64 fpu fpu_exception wp vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb invpcid_single pti ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx rdseed adx smap clflushopt intel_pt xsaveopt xsavec xgetbv1 xsaves dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp md_clear flush_l1d cpufreq
+          configuration: cores=4 enabledcores=4 threads=8
+        *-cache:0
+             description: L1 cache
+             physical id: 6
+             slot: L1 Cache
+             size: 128KiB
+             capacity: 128KiB
+             capabilities: synchronous internal write-back instruction
+             configuration: level=1
+        *-cache:1
+             description: L2 cache
+             physical id: 7
+             slot: L2 Cache
+             size: 1MiB
+             capacity: 1MiB
+             capabilities: synchronous internal write-back unified
+             configuration: level=2
+        *-cache:2
+             description: L3 cache
+             physical id: 8
+             slot: L3 Cache
+             size: 8MiB
+             capacity: 8MiB
+             capabilities: synchronous internal write-back unified
+             configuration: level=3
+     *-cache
+          description: L1 cache
+          physical id: 5
+          slot: L1 Cache
+          size: 128KiB
+          capacity: 128KiB
+          capabilities: synchronous internal write-back data
+          configuration: level=1
+     *-memory
+          description: System Memory
+          physical id: 26
+          slot: System board or motherboard
+          size: 32GiB
+        *-bank:0
+             description: SODIMM Synchronous 2133 MHz (0.5 ns)
+             product: M4S0-AGS1OCSJ
+             vendor: 86F1
+             physical id: 0
+             serial: 00020001
+             slot: ChannelA-DIMM0
+             size: 16GiB
+             width: 64 bits
+             clock: 2133MHz (0.5ns)
+        *-bank:1
+             description: [empty]
+             physical id: 1
+             slot: ChannelA-DIMM1
+        *-bank:2
+             description: SODIMM Synchronous 2133 MHz (0.5 ns)
+             product: M4S0-AGS1OCSJ
+             vendor: 86F1
+             physical id: 2
+             serial: 00020002
+             slot: ChannelB-DIMM0
+             size: 16GiB
+             width: 64 bits
+             clock: 2133MHz (0.5ns)
+        *-bank:3
+             description: [empty]
+             physical id: 3
+             slot: ChannelB-DIMM1
+     *-pci
+          description: Host bridge
+          product: Xeon E3-1200 v5/E3-1500 v5/6th Gen Core Processor Host Bridge/DRAM Registers
+          vendor: Intel Corporation
+          physical id: 100
+          bus info: pci@0000:00:00.0
+          version: 07
+          width: 32 bits
+          clock: 33MHz
+          configuration: driver=ie31200_edac
+          resources: irq:0
+        *-pci:0
+             description: PCI bridge
+             product: Xeon E3-1200 v5/E3-1500 v5/6th Gen Core Processor PCIe Controller (x16)
+             vendor: Intel Corporation
+             physical id: 1
+             bus info: pci@0000:00:01.0
+             version: 07
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci pm msi pciexpress normal_decode bus_master cap_list
+             configuration: driver=pcieport
+             resources: irq:121 ioport:4000(size=4096) memory:b0000000-c30fffff ioport:c3100000(size=1048576)
+           *-display
+                description: VGA compatible controller
+                product: TU104 [GeForce RTX 2080 Rev. A]
+                vendor: NVIDIA Corporation
+                physical id: 0
+                bus info: pci@0000:01:00.0
+                version: a1
+                width: 64 bits
+                clock: 33MHz
+                capabilities: pm msi pciexpress vga_controller bus_master cap_list rom
+                configuration: driver=nvidia latency=0
+                resources: irq:134 memory:c2000000-c2ffffff memory:b0000000-bfffffff memory:c0000000-c1ffffff ioport:4000(size=128) memory:c0000-dffff
+           *-multimedia
+                description: Audio device
+                product: TU104 HD Audio Controller
+                vendor: NVIDIA Corporation
+                physical id: 0.1
+                bus info: pci@0000:01:00.1
+                version: a1
+                width: 32 bits
+                clock: 33MHz
+                capabilities: pm msi pciexpress bus_master cap_list
+                configuration: driver=snd_hda_intel latency=0
+                resources: irq:17 memory:c3000000-c3003fff
+           *-usb
+                description: USB controller
+                product: TU104 USB 3.1 Host Controller
+                vendor: NVIDIA Corporation
+                physical id: 0.2
+                bus info: pci@0000:01:00.2
+                version: a1
+                width: 64 bits
+                clock: 33MHz
+                capabilities: msi pciexpress pm xhci bus_master cap_list
+                configuration: driver=xhci_hcd latency=0
+                resources: irq:124 memory:c3100000-c313ffff memory:c3140000-c314ffff
+              *-usbhost:0
+                   product: xHCI Host Controller
+                   vendor: Linux 4.15.0-76-generic xhci-hcd
+                   physical id: 0
+                   bus info: usb@3
+                   logical name: usb3
+                   version: 4.15
+                   capabilities: usb-2.00
+                   configuration: driver=hub slots=2 speed=480Mbit/s
+              *-usbhost:1
+                   product: xHCI Host Controller
+                   vendor: Linux 4.15.0-76-generic xhci-hcd
+                   physical id: 1
+                   bus info: usb@4
+                   logical name: usb4
+                   version: 4.15
+                   capabilities: usb-3.10
+                   configuration: driver=hub slots=4 speed=10000Mbit/s
+           *-serial UNCLAIMED
+                description: Serial bus controller
+                product: TU104 USB Type-C UCSI Controller
+                vendor: NVIDIA Corporation
+                physical id: 0.3
+                bus info: pci@0000:01:00.3
+                version: a1
+                width: 32 bits
+                clock: 33MHz
+                capabilities: msi pciexpress pm bus_master cap_list
+                configuration: latency=0
+                resources: memory:c3004000-c3004fff
+        *-usb
+             description: USB controller
+             product: 100 Series/C230 Series Chipset Family USB 3.0 xHCI Controller
+             vendor: Intel Corporation
+             physical id: 14
+             bus info: pci@0000:00:14.0
+             version: 31
+             width: 64 bits
+             clock: 33MHz
+             capabilities: pm msi xhci bus_master cap_list
+             configuration: driver=xhci_hcd latency=0
+             resources: irq:123 memory:c3320000-c332ffff
+           *-usbhost:0
+                product: xHCI Host Controller
+                vendor: Linux 4.15.0-76-generic xhci-hcd
+                physical id: 0
+                bus info: usb@1
+                logical name: usb1
+                version: 4.15
+                capabilities: usb-2.00
+                configuration: driver=hub slots=16 speed=480Mbit/s
+              *-usb:0
+                   description: USB hub
+                   product: 4-Port USB 2.0 Hub
+                   vendor: Generic
+                   physical id: 1
+                   bus info: usb@1:1
+                   version: 1.04
+                   capabilities: usb-2.10
+                   configuration: driver=hub slots=4 speed=480Mbit/s
+                 *-usb
+                      description: USB hub
+                      product: 4-Port USB 2.0 Hub
+                      vendor: Generic
+                      physical id: 4
+                      bus info: usb@1:1.4
+                      version: 1.04
+                      capabilities: usb-2.10
+                      configuration: driver=hub slots=4 speed=480Mbit/s
+              *-usb:1
+                   description: USB hub
+                   product: USB2.0 Hub
+                   vendor: VIA Labs, Inc.
+                   physical id: 2
+                   bus info: usb@1:2
+                   version: 0.50
+                   capabilities: usb-2.10
+                   configuration: driver=hub slots=4 speed=480Mbit/s
+                 *-usb
+                      description: USB hub
+                      product: USB 2.0 Hub
+                      vendor: Terminus Technology Inc.
+                      physical id: 1
+                      bus info: usb@1:2.1
+                      version: 1.11
+                      capabilities: usb-2.00
+                      configuration: driver=hub maxpower=100mA slots=4 speed=480Mbit/s
+                    *-usb
+                         description: USB hub
+                         product: USB 2.0 Hub
+                         vendor: Standard Microsystems Corp.
+                         physical id: 3
+                         bus info: usb@1:2.1.3
+                         version: 0.00
+                         capabilities: usb-2.00
+                         configuration: driver=hub maxpower=2mA slots=2 speed=480Mbit/s
+                       *-usb
+                            description: USB hub
+                            product: USB 2.0 Hub
+                            vendor: Standard Microsystems Corp.
+                            physical id: 1
+                            bus info: usb@1:2.1.3.1
+                            version: 0.00
+                            capabilities: usb-2.00
+                            configuration: driver=hub maxpower=2mA slots=4 speed=480Mbit/s
+                          *-usb:0
+                               description: Mass storage device
+                               product: Flash Card Reader
+                               vendor: Generic
+                               physical id: 1
+                               bus info: usb@1:2.1.3.1.1
+                               logical name: scsi4
+                               version: 5.39
+                               serial: 090304207747
+                               capabilities: usb-2.00 scsi emulated scsi-host
+                               configuration: driver=usb-storage maxpower=2mA speed=480Mbit/s
+                             *-disk:0
+                                  description: SCSI Disk
+                                  product: Flash HS-CF
+                                  vendor: Generic
+                                  physical id: 0.0.0
+                                  bus info: scsi@4:0.0.0
+                                  logical name: /dev/sdb
+                                  version: 5.39
+                                  capabilities: removable
+                                  configuration: logicalsectorsize=512 sectorsize=512
+                                *-medium
+                                     physical id: 0
+                                     logical name: /dev/sdb
+                             *-disk:1
+                                  description: SCSI Disk
+                                  product: Flash HS-COMBO
+                                  vendor: Generic
+                                  physical id: 0.0.1
+                                  bus info: scsi@4:0.0.1
+                                  logical name: /dev/sdc
+                                  version: 5.39
+                                  capabilities: removable
+                                  configuration: logicalsectorsize=512 sectorsize=512
+                                *-medium
+                                     physical id: 0
+                                     logical name: /dev/sdc
+                          *-usb:1
+                               description: Mouse
+                               product: USB Optical Mouse
+                               vendor: Logitech
+                               physical id: 3
+                               bus info: usb@1:2.1.3.1.3
+                               version: 72.00
+                               capabilities: usb-2.00
+                               configuration: driver=usbhid maxpower=100mA speed=2Mbit/s
+                          *-usb:2
+                               description: Keyboard
+                               product: Dell Smart Card Reader Keyboard
+                               vendor: Dell
+                               physical id: 4
+                               bus info: usb@1:2.1.3.1.4
+                               version: 2.01
+                               capabilities: usb-2.00
+                               configuration: driver=usbhid maxpower=50mA speed=12Mbit/s
+              *-usb:2
+                   description: Communication device
+                   product: MTi-G-700 GPS/INS
+                   vendor: Xsens
+                   physical id: 3
+                   bus info: usb@1:3
+                   version: 0.00
+                   serial: 0770147F
+                   capabilities: usb-1.10
+                   configuration: driver=xsens_mt maxpower=200mA speed=12Mbit/s
+              *-usb:3
+                   description: Generic USB device
+                   product: Kvaser USBcan Light 4xHS
+                   vendor: Kvaser AB
+                   physical id: 4
+                   bus info: usb@1:4
+                   version: 0.01
+                   capabilities: usb-2.00
+                   configuration: driver=mhydra maxpower=500mA speed=480Mbit/s
+           *-usbhost:1
+                product: xHCI Host Controller
+                vendor: Linux 4.15.0-76-generic xhci-hcd
+                physical id: 1
+                bus info: usb@2
+                logical name: usb2
+                version: 4.15
+                capabilities: usb-3.00
+                configuration: driver=hub slots=10 speed=5000Mbit/s
+              *-usb:0
+                   description: USB hub
+                   product: 4-Port USB 3.0 Hub
+                   vendor: Generic
+                   physical id: 1
+                   bus info: usb@2:1
+                   version: 1.04
+                   capabilities: usb-3.00
+                   configuration: driver=hub slots=4 speed=5000Mbit/s
+                 *-usb
+                      description: USB hub
+                      product: 4-Port USB 3.0 Hub
+                      vendor: Generic
+                      physical id: 4
+                      bus info: usb@2:1.4
+                      version: 1.04
+                      capabilities: usb-3.00
+                      configuration: driver=hub slots=4 speed=5000Mbit/s
+                    *-usb
+                         description: Generic USB device
+                         product: USB 10/100/1000 LAN
+                         vendor: Realtek
+                         physical id: 4
+                         bus info: usb@2:1.4.4
+                         version: 30.00
+                         serial: 000001
+                         capabilities: usb-3.00
+                         configuration: driver=r8152 maxpower=288mA speed=5000Mbit/s
+              *-usb:1
+                   description: USB hub
+                   product: USB3.0 Hub
+                   vendor: VIA Labs, Inc.
+                   physical id: 2
+                   bus info: usb@2:2
+                   version: 0.50
+                   capabilities: usb-3.10
+                   configuration: driver=hub slots=4 speed=5000Mbit/s
+        *-communication:0
+             description: Communication controller
+             product: 100 Series/C230 Series Chipset Family MEI Controller #1
+             vendor: Intel Corporation
+             physical id: 16
+             bus info: pci@0000:00:16.0
+             version: 31
+             width: 64 bits
+             clock: 33MHz
+             capabilities: pm msi bus_master cap_list
+             configuration: driver=mei_me latency=0
+             resources: irq:132 memory:c334a000-c334afff
+        *-communication:1
+             description: Serial controller
+             product: 100 Series/C230 Series Chipset Family KT Redirection
+             vendor: Intel Corporation
+             physical id: 16.3
+             bus info: pci@0000:00:16.3
+             version: 31
+             width: 32 bits
+             clock: 66MHz
+             capabilities: msi pm 16550 bus_master cap_list
+             configuration: driver=serial latency=0
+             resources: irq:19 ioport:5040(size=8) memory:c334e000-c334efff
+        *-storage
+             description: SATA controller
+             product: Q170/Q150/B150/H170/H110/Z170/CM236 Chipset SATA Controller [AHCI Mode]
+             vendor: Intel Corporation
+             physical id: 17
+             bus info: pci@0000:00:17.0
+             version: 31
+             width: 32 bits
+             clock: 66MHz
+             capabilities: storage msi pm ahci_1.0 bus_master cap_list
+             configuration: driver=ahci latency=0
+             resources: irq:125 memory:c3348000-c3349fff memory:c334d000-c334d0ff ioport:5048(size=8) ioport:5050(size=4) ioport:5020(size=32) memory:c334b000-c334b7ff
+        *-pci:1
+             description: PCI bridge
+             product: 100 Series/C230 Series Chipset Family PCI Express Root Port #9
+             vendor: Intel Corporation
+             physical id: 1d
+             bus info: pci@0000:00:1d.0
+             version: f1
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci pciexpress msi pm normal_decode bus_master cap_list
+             configuration: driver=pcieport
+             resources: irq:122 ioport:3000(size=4096) memory:c3200000-c32fffff
+           *-network
+                description: Ethernet interface
+                product: I210 Gigabit Network Connection
+                vendor: Intel Corporation
+                physical id: 0
+                bus info: pci@0000:02:00.0
+                logical name: enp2s0
+                version: 03
+                serial: 78:d0:04:26:cb:af
+                size: 1Gbit/s
+                capacity: 1Gbit/s
+                width: 32 bits
+                clock: 33MHz
+                capabilities: pm msi msix pciexpress bus_master cap_list ethernet physical tp 10bt 10bt-fd 100bt 100bt-fd 1000bt-fd autonegotiation
+                configuration: autonegotiation=on broadcast=yes driver=igb driverversion=5.4.0-k duplex=full firmware=3.16, 0x800004d8 latency=0 link=yes multicast=yes port=twisted pair speed=1Gbit/s
+                resources: irq:16 memory:c3200000-c327ffff ioport:3000(size=32) memory:c3280000-c3283fff
+        *-isa
+             description: ISA bridge
+             product: C236 Chipset LPC/eSPI Controller
+             vendor: Intel Corporation
+             physical id: 1f
+             bus info: pci@0000:00:1f.0
+             version: 31
+             width: 32 bits
+             clock: 33MHz
+             capabilities: isa bus_master
+             configuration: latency=0
+        *-memory UNCLAIMED
+             description: Memory controller
+             product: 100 Series/C230 Series Chipset Family Power Management Controller
+             vendor: Intel Corporation
+             physical id: 1f.2
+             bus info: pci@0000:00:1f.2
+             version: 31
+             width: 32 bits
+             clock: 33MHz (30.3ns)
+             capabilities: bus_master
+             configuration: latency=0
+             resources: memory:c3344000-c3347fff
+        *-multimedia
+             description: Audio device
+             product: 100 Series/C230 Series Chipset Family HD Audio Controller
+             vendor: Intel Corporation
+             physical id: 1f.3
+             bus info: pci@0000:00:1f.3
+             version: 31
+             width: 64 bits
+             clock: 33MHz
+             capabilities: pm msi bus_master cap_list
+             configuration: driver=snd_hda_intel latency=32
+             resources: irq:133 memory:c3340000-c3343fff memory:c3330000-c333ffff
+        *-serial UNCLAIMED
+             description: SMBus
+             product: 100 Series/C230 Series Chipset Family SMBus
+             vendor: Intel Corporation
+             physical id: 1f.4
+             bus info: pci@0000:00:1f.4
+             version: 31
+             width: 64 bits
+             clock: 33MHz
+             configuration: latency=0
+             resources: memory:c334c000-c334c0ff ioport:5000(size=32)
+        *-network
+             description: Ethernet interface
+             product: Ethernet Connection (2) I219-LM
+             vendor: Intel Corporation
+             physical id: 1f.6
+             bus info: pci@0000:00:1f.6
+             logical name: enp0s31f6
+             version: 31
+             serial: 78:d0:04:26:cb:ae
+             capacity: 1Gbit/s
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pm msi bus_master cap_list ethernet physical tp 10bt 10bt-fd 100bt 100bt-fd 1000bt-fd autonegotiation
+             configuration: autonegotiation=on broadcast=yes driver=e1000e driverversion=3.2.6-k firmware=0.8-4 latency=0 link=no multicast=yes port=twisted pair
+             resources: irq:126 memory:c3300000-c331ffff
+     *-scsi
+          physical id: 1
+          logical name: scsi1
+          capabilities: emulated
+        *-disk
+             description: ATA Disk
+             product: CT500MX500SSD1
+             physical id: 0.0.0
+             bus info: scsi@1:0.0.0
+             logical name: /dev/sda
+             version: 023
+             serial: 1849E1DC1857
+             size: 465GiB (500GB)
+             capabilities: partitioned partitioned:dos
+             configuration: ansiversion=5 logicalsectorsize=512 sectorsize=4096 signature=fb1eb4ac
+           *-volume:0
+                description: EXT4 volume
+                vendor: Linux
+                physical id: 1
+                bus info: scsi@1:0.0.0,1
+                logical name: /dev/sda1
+                logical name: /
+                version: 1.0
+                serial: 9bfdad17-fb12-49ad-981a-92da350910a0
+                size: 464GiB
+                capacity: 464GiB
+                capabilities: primary bootable journaled extended_attributes large_files huge_files dir_nlink extents ext4 ext2 initialized
+                configuration: created=2019-05-16 14:13:40 filesystem=ext4 lastmountpoint=/ modified=2020-10-15 11:01:26 mount.fstype=ext4 mount.options=rw,relatime,errors=remount-ro,data=ordered mounted=2020-10-02 09:42:27 state=mounted
+           *-volume:1
+                description: Extended partition
+                physical id: 2
+                bus info: scsi@1:0.0.0,2
+                logical name: /dev/sda2
+                size: 975MiB
+                capacity: 975MiB
+                capabilities: primary extended partitioned partitioned:extended
+              *-logicalvolume
+                   description: Linux swap / Solaris partition
+                   physical id: 5
+                   logical name: /dev/sda5
+                   capacity: 975MiB
+                   capabilities: nofs
+  *-battery
+       description: Zinc Air Battery
+       product: CRB Battery 0
+       vendor: -Virtual Battery 0-
+       physical id: 1
+       version: 08/08/2010
+       serial: Battery 0
+       slot: Fake
+  *-power UNCLAIMED
+       description: OEM Define 1
+       product: OEM Define 5
+       vendor: OEM Define 2
+       physical id: 2
+       version: OEM Define 6
+       serial: OEM Define 3
+       capacity: 75mWh
+  *-network
+       description: Ethernet interface
+       physical id: 3
+       logical name: enx00e04c20308e
+       serial: 00:e0:4c:20:30:8e
+       size: 10Mbit/s
+       capacity: 1Gbit/s
+       capabilities: ethernet physical tp mii 10bt 10bt-fd 100bt 100bt-fd 1000bt 1000bt-fd autonegotiation
+       configuration: autonegotiation=on broadcast=yes driver=r8152 driverversion=v1.09.9 duplex=half link=no multicast=yes port=MII speed=10Mbit/s
+       
+       
+Thu Oct 15 11:05:53 2020       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 440.33.01    Driver Version: 440.33.01    CUDA Version: 10.2     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|===============================+======================+======================|
+|   0  GeForce RTX 2080    Off  | 00000000:01:00.0  On |                  N/A |
+|  0%   25C    P8    14W / 225W |    309MiB /  7981MiB |      0%      Default |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                       GPU Memory |
+|  GPU       PID   Type   Process name                             Usage      |
+|=============================================================================|
+|    0      1063      G   /usr/lib/xorg/Xorg                           170MiB |
+|    0      1624      G   compiz                                       136MiB |
++-----------------------------------------------------------------------------+
