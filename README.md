@@ -1,11 +1,13 @@
 # AY21_IGVC
 IGVC Self-Drive Fall 2020-Spring 2021
 ## Autonomous Vehicle Research and Development Team
-<img src="IGVC.png"
+<img src="/Images/IGVC.png"
      alt="IGVC Cadets"
      style="float: left; margin-right: 10px;" />
-     
-![Optional Text](https://github.com/westpoint-robotics/AY21_IGVC/tree/master/Images/IGVC.png?raw=true)
+<img src="/Images/Logo.png"
+     alt="Logo"
+     style="float: left; margin-right: 10px;" />
+
 ### Mission Statement
 The USMA Autonomous Vehicle Research and Development (AVRAD) team develops, incorporates, and tests urban navigation modules to compete and win in the Intelligent Ground Vehicle Competition (IGVC) and integrates these functionalities within the Robotic Technology Kernel (RTK). ​
 ### Members
