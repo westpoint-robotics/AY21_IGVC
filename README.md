@@ -4,10 +4,10 @@ IGVC Self-Drive Fall 2020-Spring 2021
 ![IGVC Cadets](https://github.com/westpoint-robotics/AY21_IGVC/tree/master/Images/IGVC.png?raw=true)
 ### Members
 #### EECS
-##### HyunJin Lim
-##### Joobon Maeng
-##### Chloe DeWees
-##### Donte Harris
+* HyunJin Lim
+* Joobon Maeng
+* Chloe DeWees
+* Donte Harris
 #### CME
 ##### Jack Whalen
 ##### Brian Probert
