@@ -1,9 +1,7 @@
 # AY21_IGVC
-IGVC Self-Drive Fall 2020-Spring 2021
+Inteligent Ground Vehicle Competition: Self-Drive AY2021
 ## Autonomous Vehicle Research and Development Team
-<img src="/Images/IGVC.png"
-     alt="IGVC Cadets"
-     style="float: left; margin-right: 10px;" />
+
 <img src="/Images/Logo.png"
      alt="Logo"
      style="float: left; margin-right: 10px;" />
@@ -59,3 +57,6 @@ The USMA Autonomous Vehicle Research and Development (AVRAD) team develops, inco
 ### Launching the main package:
 
 * Run 'roslaunch AY20_IGVC gem_e2.launch
+<img src="/Images/IGVC.png"
+     alt="IGVC Cadets"
+     style="float: left; margin-right: 10px;" />
