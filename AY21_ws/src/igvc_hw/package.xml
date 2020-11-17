@@ -49,6 +49,20 @@
   <!-- Use doc_depend for packages you need only for building documentation: -->
   <!--   <doc_depend>doxygen</doc_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
+  
+  <build_depend>roslint</build_depend>
+  <build_depend>message_generation</build_depend>
+  
+  <exec_depend>message_runtime</exec_depend>
+  
+  <depend>roscpp</depend>
+  <depend>rospy</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>pacmod_msgs</depend>
+  <depend>rosserial_arduino</depend>
+  <depend>rosserial_client</depend>
+  <depend>joy</depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->

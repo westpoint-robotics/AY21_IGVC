@@ -1,0 +1,20 @@
+image_width: 1920
+image_height: 1440
+camera_name: left_optical
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [1204.451509, 0.000000, 1032.409452, 0.000000, 1203.549288, 760.767938, 0.000000, 0.000000, 1.000000]
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  data: [-0.284746, 0.081991, -0.001747, -0.003022, 0.000000]
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000]
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [963.023438, 0.000000, 1047.744530, 0.000000, 0.000000, 1066.714722, 768.209097, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000]

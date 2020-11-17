@@ -6,7 +6,7 @@
 	    <node name="camera_fm" pkg="avt_vimba_camera" type="mono_camera_node" output="screen">
 		    <param name="guid" value="DEV_000F315C1E80"/>
 		    <param name="ip" value=""/>
-		    <param name="camera_info_url" value="file://$(find AY20_IGVC)/launch/config/calibrations/camera_fm.yaml"/>
+		    <param name="camera_info_url" value="file://$(find igvc_hw)/config/calibrations/camera_fm.yaml"/>
 		    <param name="frame_id" value="middle_optical"/>
 		    <param name="trig_timestamp_topic" value=""/>
 		    <param name="show_debug_prints" value="true"/>

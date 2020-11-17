@@ -6,7 +6,7 @@
 	    <node name="camera_fl" pkg="avt_vimba_camera" type="mono_camera_node" output="screen">
 		    <!-- <param name="guid" value="DEV_000F315C49D7"/> -->
 		    <param name="ip" value="192.168.1.21"/>
-		    <param name="camera_info_url" value="file://$(find gem_e2)/launch/config/calibrations/camera_fl.yaml"/>
+		    <param name="camera_info_url" value="file://$(find igvc_hw)/config/calibrations/camera_fl.yaml"/>
 		    <param name="frame_id" value="left_optical"/>
 		    <param name="trig_timestamp_topic" value=""/>
 		    <param name="show_debug_prints" value="true"/>
