@@ -50,6 +50,7 @@ void loop()
 }
 
 bool buttonSurvey(){
+  Serial.println(digitalRead(wired));
   if (digitalRead(wireless) || digitalRead(wired)){
     return true;
   }
