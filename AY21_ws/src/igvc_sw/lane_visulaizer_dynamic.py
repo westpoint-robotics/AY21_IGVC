@@ -16,14 +16,14 @@ camerafile = "sample.hevc"#sys.argv[1]
 supercombo = load_model('supercombo.keras')
 
 #print(supercombo.summary())
-
+"""
 MAX_DISTANCE = 140.
 LANE_OFFSET = 1.8
 MAX_REL_V = 10.
 
 LEAD_X_SCALE = 10
 LEAD_Y_SCALE = 10
-
+"""
 def frames_to_tensor(frames):                                                                                               
   H = (frames.shape[1]*2)//3                                                                                                
   W = frames.shape[2]                                                                                                       
