@@ -120,7 +120,6 @@ def frames_to_tensor(frames):
 
 def visualizer(cv_image):
     camerafile = "sample.hevc"#sys.argv[1]
-    supercombo = load_model('supercombo.keras')
     imgs_med_model = np.zeros((2, 384, 512), dtype=np.uint8)
     state = np.zeros((1,512))
     desire = np.zeros((1,8))
