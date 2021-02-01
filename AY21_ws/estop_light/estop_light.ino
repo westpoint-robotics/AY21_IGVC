@@ -49,7 +49,7 @@ void loop()
     delay(100);
 }
 
-bool buttonSurvey(){
+bool buttonSurvey(){ 
   Serial.println(digitalRead(wired));
   if (digitalRead(wireless) || digitalRead(wired)){
     return true;
