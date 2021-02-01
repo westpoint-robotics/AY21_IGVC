@@ -15,15 +15,15 @@ import sys
 camerafile = "sample.hevc"#sys.argv[1]
 supercombo = load_model('supercombo.keras')
 
-#print(supercombo.summary())
-"""
+print(supercombo.summary())
+
 MAX_DISTANCE = 140.
 LANE_OFFSET = 1.8
 MAX_REL_V = 10.
 
 LEAD_X_SCALE = 10
 LEAD_Y_SCALE = 10
-"""
+
 def frames_to_tensor(frames):                                                                                               
   H = (frames.shape[1]*2)//3                                                                                                
   W = frames.shape[2]                                                                                                       
@@ -52,6 +52,8 @@ else:
   imgs_med_model[0] = transform_img(img_yuv, from_intr=eon_intrinsics, to_intr=medmodel_intrinsics, yuv=True,
                                     output_size=(512,256))
 
+filtered = 600
+alpha = 0.1
 while True:
   plt.clf()
   plt.title("lanes and path")
@@ -77,9 +79,14 @@ while True:
   new_x_left, new_y_left = transform_points(x_left, parsed["lll"][0])
   new_x_right, new_y_right = transform_points(x_left, parsed["rll"][0])
   new_x_path, new_y_path = transform_points(x_left, parsed["path"][0])
-  plt.plot(new_x_left, new_y_left, label='transformed', color='w')
-  plt.plot(new_x_right, new_y_right, label='transformed', color='w')
-  plt.plot(new_x_path, new_y_path, label='transformed', color='green')
+  error = 600 - new_x_path[0]
+  deg = (new_x_path[-1] - new_x_path[0])
+  filtered = alpha*error + (1-alpha)*filtered
+  # print(filtered) # heading and the cross track error error = middle - new_x_path[0]
+  # print("---------------------------")
+  plt.plot(new_x_left, new_y_left, label='transformed', color='w', linewidth=4)
+  plt.plot(new_x_right, new_y_right, label='transformed', color='w', linewidth=4)
+  plt.plot(new_x_path, new_y_path, label='transformed', color='green', linewidth=4)
   imgs_med_model[0]=imgs_med_model[1]
   plt.pause(0.001)
   if cv2.waitKey(10) & 0xFF == ord('q'):
