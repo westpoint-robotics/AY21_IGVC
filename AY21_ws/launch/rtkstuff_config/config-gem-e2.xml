@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<launch>
+  <!--vehicles typically have several of the following.
+      value = number of that piece of hardware -->
+  <param name="ibeo_wf" value="0" type="int"/>
+  <param name="uwb_wf" value="0" type="int"/>
+  <param name="network_switch_wf" value="3" type="int"/>
+
+  <!--use true/false for these diagnostics-->
+  <param name="master_wf" value="true" type="bool"/>
+  <param name="localization_wf" value="true" type="bool"/>
+  <param name="aux1_wf" value="true" type="bool"/>
+  <param name="aux2_wf" value="true" type="bool"/>
+  <param name="power_24v_wf" value="true" type="bool"/>
+  <param name="rgb_camera_front_wf" value="true" type="bool"/>
+  <param name="rgb_camera_rear_wf" value="true" type="bool"/>
+  <param name="drive_camera_front_color_wf" value="true" type="bool"/>
+  <param name="drive_camera_front_ir_wf" value="true" type="bool"/>
+  <param name="drive_camera_rear_color_wf" value="true" type="bool"/>
+  <param name="drive_camera_rear_ir_wf" value="true" type="bool"/>
+  <param name="payloadIR_wf" value="true" type="bool"/>
+  <param name="payloadLL_wf" value="true" type="bool"/>
+  <param name="payloadSensor_wf" value="false" type="bool"/>
+  <param name="velodyne_front_wf" value="true" type="bool"/>
+  <param name="velodyne_rear_wf" value="true" type="bool"/>
+  <param name="gps_wf" value="true" type="bool"/>
+  <param name="estop" value="true" type="bool"/>
+  <param name="ito" value="true" type="bool"/>
+  <param name="imu_wf" value="true" type="bool"/>
+  <param name="rajant_radio" value="true" type="bool"/>
+  <param name="dbw_wf" value="true" type="bool"/>
+  <param name="mototron_wf" value="true" type="bool"/>
+  <param name="safety_monitor_wf" value="true" type="bool"/>
+  <param name="fuel_wf" value="false" type="bool"/>
+  <param name="engine_temp_wf" value="false" type="bool"/>
+</launch>

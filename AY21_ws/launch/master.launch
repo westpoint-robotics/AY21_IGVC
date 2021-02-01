@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  TELEOP  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <include file="$(find AY20_IGVC)/launch/pacmod_game_control.launch">
+    <arg name="controller_type" value="XBOX_ONE" />
+  </include>
+  
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  Vehicle Manager  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <node name="vehicle_manager_hl" pkg="AY20_IGVC" type="vehicle_manager_hl.py" output="screen" />
+  
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  Arduino  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <node name="EStop_publisher" pkg="rosserial_python" type="serial_node.py">
+      <param name="port" value="/dev/arduino"/>
+  </node>
+  
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  self-kill  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <node name="self_kill_node" pkg="AY20_IGVC" type="self_kill.py" />
+  
+</launch>

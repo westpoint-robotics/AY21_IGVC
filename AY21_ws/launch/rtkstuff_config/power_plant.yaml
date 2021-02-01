@@ -1,0 +1,17 @@
+- type                       : gas
+  fuel_capacity              : 27.4
+  oil_capacity               : 
+  max_oil_pressure           : 
+  max_oil_temp               : 
+  max_engine_temp            : 
+  max_coolant_level          : 
+  max_coolant_temp           : 
+  diesel_max_glow_plug_temp  : 
+  diesel_glow_plug_time      : 
+  battery_nominal_voltage    :
+  battery_max_charge         :
+  battery_max_cranking_amps  :
+  hydraulic_fluid_capacity   :
+  hydraulic_max_pressure     :
+  hydraulic_max_temp         :
+  fuel_cell_fuel_capacity    :

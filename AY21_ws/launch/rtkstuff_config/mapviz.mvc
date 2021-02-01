@@ -1,0 +1,166 @@
+fixed_frame: /near_field
+target_frame: /veh_near_field
+fix_orientation: false
+show_displays: true
+window_width: 1674
+window_height: 853
+view_scale: 0.0373209267854691
+offset_x: -11.1011743545532
+offset_y: -2.14428329467773
+use_latest_transforms: true
+background: "#a0a0a4"
+displays:
+  - type: mapviz_plugins/mutlires_image
+    name: new display
+    config:
+      visible: true
+      collapsed: true
+      path: ../../data/map_tiles/swri_full/swri_full.geo
+  - type: sumet_mapviz_plugins/costmap
+    name: new display
+    config:
+      visible: true
+      collapsed: true
+      topic: /navigation/original_costmap
+      alpha: 1
+      full_scale: false
+      inverted: true
+  - type: sumet_mapviz_plugins/costmap
+    name: new display
+    config:
+      visible: true
+      collapsed: true
+      topic: /navigation/integrated_costmap
+      alpha: 1
+      full_scale: true
+      inverted: true
+  - type: mapviz_plugins/odometry
+    name: new display
+    config:
+      visible: true
+      collapsed: true
+      topic: /localization/far_field_odom
+      color: "#ffaa00"
+      draw_style: lines
+      position_tolerance: 0
+      buffer_size: 0
+      show_covariance: false
+  - type: mapviz_plugins/odometry
+    name: new display
+    config:
+      visible: true
+      collapsed: true
+      topic: /localization/near_field_odom
+      color: "#00ff00"
+      draw_style: lines
+      position_tolerance: 0
+      buffer_size: 0
+      show_covariance: false
+  - type: mapviz_plugins/path
+    name: new display
+    config:
+      visible: true
+      collapsed: true
+      topic: /navigation/path
+  - type: mapviz_plugins/robot_image
+    name: new display
+    config:
+      visible: true
+      collapsed: true
+      frame: /hmmwv_image
+      image: /home/dsat/SUMET/sumet_visualization/vehicle_mesh/humvee/green_humvee.png
+      width: 2.5
+      height: 4
+  - type: mapviz_plugins/marker
+    name: new display
+    config:
+      visible: true
+      collapsed: true
+      topic: /a_star_search_graph
+      is_marker_array: true
+  - type: sumet_mapviz_plugins/active_route
+    name: new display
+    config:
+      visible: true
+      collapsed: true
+      topic: /navigation/active_route
+      inside_roi_color: "#000000"
+      outside_roi_color: "#ff00ff"
+      current_waypoint_color: "#00ff00"
+      next_checkpoint_color: "#00d0ff"
+  - type: sumet_mapviz_plugins/polygon_stamped
+    name: new display
+    config:
+      visible: true
+      collapsed: true
+      topic: /navigation/nfpp_goal
+      color: "#5500ff"
+  - type: mapviz_plugins/marker
+    name: new display
+    config:
+      visible: true
+      collapsed: true
+      topic: /navigation/path_markers
+      is_marker_array: true
+  - type: mapviz_plugins/marker
+    name: new display
+    config:
+      visible: true
+      collapsed: true
+      topic: /uwb_trilateration/markers
+      is_marker_array: true
+  - type: mapviz_plugins/marker
+    name: new display
+    config:
+      visible: true
+      collapsed: true
+      topic: /obstacle_markers
+      is_marker_array: true
+  - type: mapviz_plugins/marker
+    name: new display
+    config:
+      visible: false
+      collapsed: true
+      topic: /navigation/a_star_search_graph
+      is_marker_array: false
+  - type: mapviz_plugins/image
+    name: new display
+    config:
+      visible: true
+      collapsed: false
+      topic: /front/camera_340064/binned/image_rect_color
+      anchor: top left
+      units: pixels
+      offset_x: 0
+      offset_y: 0
+      width: 326
+      height: 182
+  - type: mapviz_plugins/image
+    name: new display
+    config:
+      visible: true
+      collapsed: true
+      topic: /rgblabel_image
+      anchor: top center
+      units: pixels
+      offset_x: 0
+      offset_y: 0
+      width: 326
+      height: 182
+  - type: mapviz_plugins/disparity
+    name: new display
+    config:
+      visible: true
+      collapsed: true
+      topic: /vision/front/imperx_stereo_pipeline/disparity_filled
+      anchor: top right
+      units: pixels
+      offset_x: 0
+      offset_y: 0
+      width: 326
+      height: 182
+  - type: sumet_mapviz_plugins/annotations
+    name: new display
+    config:
+      visible: true
+      collapsed: false

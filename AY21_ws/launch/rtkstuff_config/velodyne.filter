@@ -1,0 +1,79 @@
+# MRZR 8803 TODO modify for GEM
+# filter file for velodyne_ll
+# modified 10-11-2016
+
+# Front 
+#pos 0, ring 0: 1280-14768 # vehicle body
+pos 0, ring 0: 16608-22400 # front bumper
+
+pos 0, ring 1: 1280-15760 # vehicle body
+#pos 0, ring 1: 16608-23072 # front bumper
+
+#pos 0, ring 2: 1280-14768 # vehicle body
+#pos 0, ring 2: 16608-21680 # front bumper
+
+#pos 0, ring 3: 1280-14768 # vehicle body
+#pos 0, ring 3: 18496-18864 # front left bumper
+#pos 0, ring 3: 19680-20640 # front middle bumper
+
+#pos 0, ring 4: 1280-14768 # vehicle body
+#pos 0, ring 5: 1280-14768 # vehicle body
+#pos 0, ring 6: 1280-14768 # vehicle body
+#pos 0, ring 7: 1280-14768 # vehicle body
+#pos 0, ring 8: 1280-14768 # vehicle body
+#pos 0, ring 9: 1280-14768 # vehicle body
+#pos 0, ring 10: 1280-14768 # vehicle body
+#pos 0, ring 11: 1920-14768 # vehicle body
+#pos 0, ring 12: 1920-14768 # vehicle body
+#pos 0, ring 13: 1920-14768 # vehicle body
+#pos 0, ring 14: 1920-14768 # vehicle body
+#pos 0, ring 15: 1920-14768 # vehicle body
+#pos 0, ring 16: 1920-14768 # vehicle body
+#pos 0, ring 17: 1920-14768 # vehicle body
+#pos 0, ring 18: 1920-14768 # vehicle body
+#pos 0, ring 19: 1920-14768 # vehicle body
+#pos 0, ring 20: 1920-14768 # vehicle body
+#pos 0, ring 21: 1920-14768 # vehicle body
+#pos 0, ring 22: 1920-14768 # vehicle body
+#pos 0, ring 23: 1920-14768 # vehicle body
+#pos 0, ring 24: 1920-14768 # vehicle body
+#pos 0, ring 24: 1920-14768 # vehicle body
+#pos 0, ring 25: 1920-14768 # vehicle body
+#pos 0, ring 26: 1920-14768 # vehicle body
+#pos 0, ring 27: 1920-14768 # vehicle body
+#pos 0, ring 28: 1920-14768 # vehicle body
+#pos 0, ring 29: 1920-14768 # vehicle body
+#pos 0, ring 30: 1920-14768 # vehicle body
+#pos 0, ring 31: 1920-14768 # vehicle body
+#pos 0, ring 32: 1920-14768 # vehicle body
+#pos 0, ring 33: 1920-14768 # vehicle body
+#pos 0, ring 34: 1920-14768 # vehicle body
+#pos 0, ring 35: 1920-14768 # vehicle body
+#pos 0, ring 36: 1920-14768 # vehicle body
+#pos 0, ring 37: 1920-14768 # vehicle body
+#pos 0, ring 38: 1920-14768 # vehicle body
+#pos 0, ring 39: 1920-14768 # vehicle body
+#pos 0, ring 40: 1920-14768 # vehicle body
+#pos 0, ring 41: 1920-14768 # vehicle body
+#pos 0, ring 42: 1920-14768 # vehicle body
+#pos 0, ring 43: 1920-14768 # vehicle body
+#pos 0, ring 44: 1920-14768 # vehicle body
+#pos 0, ring 45: 1920-14768 # vehicle body
+#pos 0, ring 46: 1920-14768 # vehicle body
+#pos 0, ring 47: 1920-14768 # vehicle body
+#pos 0, ring 48: 1920-14768 # vehicle body
+#pos 0, ring 49: 1920-14768 # vehicle body
+#pos 0, ring 50: 1920-14768 # vehicle body
+#pos 0, ring 51: 1920-14768 # vehicle body
+#pos 0, ring 52: 1920-14768 # vehicle body
+#pos 0, ring 53: 1920-14768 # vehicle body
+#pos 0, ring 54: 1920-14768 # vehicle body
+#pos 0, ring 55: 1920-14768 # vehicle body
+#pos 0, ring 56: 1920-14768 # vehicle body
+#pos 0, ring 57: 1920-14768 # vehicle body
+#pos 0, ring 58: 1920-14768 # vehicle body
+#pos 0, ring 59: 1920-14768 # vehicle body
+#pos 0, ring 60: 1920-14768 # vehicle body
+#pos 0, ring 61: 1920-14768 # vehicle body
+#pos 0, ring 62: 1920-14768 # vehicle body
+#pos 0, ring 63: 1920-14768 # vehicle body

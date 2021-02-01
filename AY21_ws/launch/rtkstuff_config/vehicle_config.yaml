@@ -1,0 +1,26 @@
+VehicleModelConfig:
+  initialTimestep: 0.01
+  steerRatio: 21.17 # steering wheel angle / tire angle
+  wheelBase: 2.73
+  length: 5.0 # 4.6609 # meters (over-estimated to allow for obstacle avoidance buffer)
+  length_rb: 0.991 # length from rear axle to back bumper [meters]
+  width: 2.0 # 1.86055 # meters (over-estimated to allow for obstacle avoidance buffer)
+  maxSteeringAngleBits: 540.0  # This is really degrees
+  maxSteeringRateDegPerSec: 360.0
+  massKg: 3000.0
+  aerodynamicDrag: 1.0
+  dragArea: 3.0
+  nominalSideFriction: 0.2
+  nominalSuperElevation: 0.0
+  steeringResolution: 10.0 #45.0
+  steeringFullLeftBits: 170
+  steeringFullRightbits: 855
+  steeringNullBits: -3.16  # This is really degrees
+  gbNullBits: 475
+  gbNullGasBits: 580
+  gbNullBrakeBits: 475
+  gbThrottleStartBits: 581
+  gbThrottleFullBits: 820
+  gbBrakeStartBits: 470
+  gbBrakeNormalOnBits: 400
+  gbBrakeFullBits: 300
