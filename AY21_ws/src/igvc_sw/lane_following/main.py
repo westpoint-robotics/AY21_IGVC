@@ -51,7 +51,7 @@ def frames_to_tensor(frames):
 
 def lane_following(image):
     #matplotlib.use('Agg')
-    camerafile = image#sys.argv[1]
+    # camerafile = image#sys.argv[1]
     supercombo = load_model('supercombo.keras')
 
     # print(supercombo.summary())
