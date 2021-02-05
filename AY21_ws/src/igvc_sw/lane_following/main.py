@@ -170,15 +170,20 @@ class image_feature:
         
         #self.subscriber.unregister()
 
-def main(args):
-    '''Initializes and cleanup ros node'''
-    ic = image_feature()
-    rospy.init_node('image_feature', anonymous=True)
-    try:
-        rospy.spin()
-    except KeyboardInterrupt:
-        print "Shutting down ROS Image feature detector module"
-    cv2.destroyAllWindows()
-
+def listener():
+    global cv_image, res, ourGuy
+  
+    rospy.init_node('linedetection',anonymous=True)
+    rate = rospy.Rate(12) # 12hz
+    topic = "/camera_fm/camera_fm/image_raw"
+    rospy.Subscriber(topic, Image, callback)
+    while not rospy.is_shutdown():
+    # publish pixel distance from car to line; -1 if not found
+        Help_Save_Me_From_this_eternal_torment.publish(ourGuy)
+        rate.sleep()
+        
 if __name__ == '__main__':
-    main(sys.argv)
+    try:
+        listener()
+    except KeyboardInterrupt:
+        print("Goodbye")

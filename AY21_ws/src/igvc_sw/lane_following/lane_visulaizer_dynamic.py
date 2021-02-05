@@ -9,7 +9,7 @@ import os
 from tensorflow.keras.models import load_model
 from tools.lib.parser import parser
 import cv2
-import sys
+import sys, time
 
 #matplotlib.use('Agg')
 camerafile = "sample.hevc"#sys.argv[1]
