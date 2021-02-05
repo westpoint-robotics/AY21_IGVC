@@ -33,6 +33,9 @@ LEAD_Y_SCALE = 10
 
 bridge = CvBridge()
 
+crossTrackError = rospy.Publisher('/cross_track_error', Float64, queue_size=1)
+userInterface = rospy.Publisher('lane_detection_ui',Image,queue_size=1)
+
 def frames_to_tensor(frames):                                                                                               
     H = (frames.shape[1]*2)//3                                                                                                
     W = frames.shape[2]                                                                                                       
@@ -57,7 +60,7 @@ def lane_following(image):
     state = np.zeros((1,512))
     desire = np.zeros((1,8))
 
-    cap = cv2.VideoCapture(camerafile)
+    cap = image
 
     x_left = x_right = x_path = np.linspace(0, 192, 192)
     (ret, previous_frame) = cap.read()
@@ -98,15 +101,16 @@ def lane_following(image):
         error = 600 - new_x_path[0]
         deg = (new_x_path[-1] - new_x_path[0])
         filtered = alpha*error + (1-alpha)*filtered
-        # print(filtered) # heading and the cross track error error = middle - new_x_path[0]
-        # print("---------------------------")
+        crossTrackError.publish(filtered)
         plt.plot(new_x_left, new_y_left, label='transformed', color='w', linewidth=4)
         plt.plot(new_x_right, new_y_right, label='transformed', color='w', linewidth=4)
         plt.plot(new_x_path, new_y_path, label='transformed', color='green', linewidth=4)
         imgs_med_model[0]=imgs_med_model[1]
+        userInterface.publish(plt) # this need to publish plotted ui
         plt.pause(0.001)
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
+        
 
   #plt.show()
   
@@ -161,12 +165,12 @@ class image_feature:
         # cv2.waitKey(2)
 
         #### Create CompressedIamge ####
-        msg = CompressedImage()
-        msg.header.stamp = rospy.Time.now()
-        msg.format = "jpeg"
-        msg.data = np.array(cv2.imencode('.jpg', cv_image)[1]).tostring()
+        # msg = CompressedImage()
+        # msg.header.stamp = rospy.Time.now()
+        # msg.format = "jpeg"
+        # msg.data = np.array(cv2.imencode('.jpg', cv_image)[1]).tostring()
         # Publish new image
-        self.image_pub.publish(msg)
+        # self.image_pub.publish(msg)
         
         #self.subscriber.unregister()
 
