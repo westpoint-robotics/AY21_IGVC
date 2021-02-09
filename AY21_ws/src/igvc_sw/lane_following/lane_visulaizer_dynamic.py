@@ -15,7 +15,7 @@ import sys, time
 camerafile = "sample.hevc"#sys.argv[1]
 supercombo = load_model('supercombo.keras')
 
-print(supercombo.summary())
+# print(supercombo.summary())
 
 MAX_DISTANCE = 140.
 LANE_OFFSET = 1.8
@@ -42,6 +42,7 @@ state = np.zeros((1,512))
 desire = np.zeros((1,8))
 
 cap = cv2.VideoCapture(camerafile)
+print(type(cap))
 
 x_left = x_right = x_path = np.linspace(0, 192, 192)
 (ret, previous_frame) = cap.read()
