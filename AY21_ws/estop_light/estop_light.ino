@@ -12,7 +12,7 @@
 
 ros::NodeHandle nh;
 
-//int blinkSigPin = 9; // connects to the second arduino.
+const int blinkSigPin = 4; // Relay for light
 const int wireless = 7;
 const int wired = 8;
 
@@ -32,9 +32,13 @@ ros::Publisher Estop("gem/eStop", &bool_msg);
 void setup()
 {
   Serial.begin(57600);
-  //pinMode(blinkSigPin, OUTPUT);
+  pinMode(blinkSigPin, OUTPUT);
   pinMode(wired, INPUT);
   pinMode(wireless, INPUT);
+  digitalWrite(blinkSigPin, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(1000);
+  digitalWrite(blinkSigPin, LOW);   // turn the LED on (HIGH is the voltage level)
+
   nh.initNode();
   //nh.subscribe(sub);
   nh.advertise(Estop);
