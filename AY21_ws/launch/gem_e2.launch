@@ -62,14 +62,14 @@
   </group>
   
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  TELEOP  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  <include file="$(find AY21_IGVC)/launch/teleop.launch">
+  <include file="$(find AY21_IGVC)/AY21_ws/launch/teleop.launch">
     <arg name="controller_type" value="XBOX_ONE" />
     <arg name="pacmod_board_rev" value="$(arg pacmod_board_rev)" />
     <arg name="pacmod_vehicle_type" value="$(arg pacmod_vehicle_type)" />
   </include>
   
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  SELF DRIVE  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  <include file="$(find AY21_IGVC)/launch/selfdrive.launch" />
+  <include file="$(find AY21_IGVC)/AY21_ws/launch/selfdrive.launch" />
   
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  DATA LOGGING  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
   

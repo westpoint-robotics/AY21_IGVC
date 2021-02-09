@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from lanes_image_space import transform_points
 import os
 from tensorflow.keras.models import load_model
-from tools.lib.parser import parser
+from parser import parser
 import cv2
 import sys, time
 
