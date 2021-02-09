@@ -9,12 +9,12 @@
   </node>
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  Main High Level System Nodes  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  <node name="vehicle_manager_hl" pkg="AY20_IGVC" type="vehicle_manager_hl.py" output="screen" required="True" />
-  <node name="self_kill_node" pkg="AY20_IGVC" type="self_kill.py" output="screen" required="True" />
+  <node name="vehicle_manager_hl" pkg="AY21_IGVC" type="vehicle_manager_hl.py" output="screen" required="True" />
+  <node name="self_kill_node" pkg="AY21_IGVC" type="self_kill.py" output="screen" required="True" />
   <node name="EStop_publisher" pkg="rosserial_python" type="serial_node.py" >
     <param name="port" value="/dev/ttyACM0" />
   </node>
-  <node name="user_input_node" pkg="AY20_IGVC" type="user_input_node.py" output="screen" />
+  <node name="user_input_node" pkg="AY21_IGVC" type="user_input_node.py" output="screen" />
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  PACMOD (Taken from Autonomous Stuff launch files) ~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <arg name="launch_pacmod" default="true" />
@@ -62,14 +62,14 @@
   </group>
   
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  TELEOP  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  <include file="$(find AY20_IGVC)/launch/teleop.launch">
+  <include file="$(find AY21_IGVC)/launch/teleop.launch">
     <arg name="controller_type" value="XBOX_ONE" />
     <arg name="pacmod_board_rev" value="$(arg pacmod_board_rev)" />
     <arg name="pacmod_vehicle_type" value="$(arg pacmod_vehicle_type)" />
   </include>
   
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  SELF DRIVE  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  <include file="$(find AY20_IGVC)/launch/selfdrive.launch" />
+  <include file="$(find AY21_IGVC)/launch/selfdrive.launch" />
   
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  DATA LOGGING  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
   

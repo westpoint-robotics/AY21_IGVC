@@ -2,12 +2,12 @@
 <launch>
 
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  TELEOP  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  <include file="$(find AY20_IGVC)/launch/pacmod_game_control.launch">
+  <!-- <include file="$(find AY21_IGVC)/launch/pacmod_game_control.launch">
     <arg name="controller_type" value="XBOX_ONE" />
-  </include>
+  </include> -->
   
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  Vehicle Manager  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  <node name="vehicle_manager_hl" pkg="AY20_IGVC" type="vehicle_manager_hl.py" output="screen" />
+  <!-- <node name="vehicle_manager_hl" pkg="AY21_IGVC" type="vehicle_manager_hl.py" output="screen" /> -->
   
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  Arduino  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <node name="EStop_publisher" pkg="rosserial_python" type="serial_node.py">
@@ -15,6 +15,9 @@
   </node>
   
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  self-kill  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  <node name="self_kill_node" pkg="AY20_IGVC" type="self_kill.py" />
+  <!-- <node name="self_kill_node" pkg="AY21_IGVC" type="self_kill.py" /> -->
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~ gem e2 launch ~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <include file="$(find AY21_IGVC)/launch/gem_e2.launch" />
   
 </launch>

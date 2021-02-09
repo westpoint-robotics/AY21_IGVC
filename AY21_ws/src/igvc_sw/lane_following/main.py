@@ -1,18 +1,28 @@
-#!/usr/bin/env python3
 from common.transformations.camera import transform_img, eon_intrinsics
 from common.transformations.model import medmodel_intrinsics
 import numpy as np
 from tqdm import tqdm
 import matplotlib
 import matplotlib.pyplot as plt
-
-import cv2 
+from lanes_image_space import transform_points
+import os
 from tensorflow.keras.models import load_model
 from tools.lib.parser import parser
 import cv2
-import sys
-camerafile = "sample.hevc"#sys.argv[1]
-supercombo = load_model('supercombo.keras')
+import sys, time
+
+# numpy and scipy
+from scipy.ndimage import filters
+
+# Ros libraries
+import roslib
+import rospy
+from cv_bridge import CvBridge
+
+# Ros Messages
+from sensor_msgs.msg import CompressedImage
+from sensor_msgs.msg import Image
+
 
 MAX_DISTANCE = 140.
 LANE_OFFSET = 1.8
@@ -21,96 +31,163 @@ MAX_REL_V = 10.
 LEAD_X_SCALE = 10
 LEAD_Y_SCALE = 10
 
-cap = cv2.VideoCapture(camerafile)
+bridge = CvBridge()
 
-imgs = []
-
-for i in tqdm(range(1000)):
-  ret, frame = cap.read()
-  #print(type(frame))
-  img_yuv = cv2.cvtColor(frame, cv2.COLOR_BGR2YUV_I420)
-  imgs.append(img_yuv.reshape((874*3//2, 1164)))
- 
+crossTrackError = rospy.Publisher('/cross_track_error', Float64, queue_size=1)
+userInterface = rospy.Publisher('lane_detection_ui',Image,queue_size=1)
 
 def frames_to_tensor(frames):                                                                                               
-  H = (frames.shape[1]*2)//3 #256                                                                                   
-  W = frames.shape[2] #512                                                                               
-  in_img1 = np.zeros((frames.shape[0], 6, H//2, W//2), dtype=np.uint8)                                                      
-                                                                                                                            
-  in_img1[:, 0] = frames[:, 0:H:2, 0::2]                                                                                    
-  in_img1[:, 1] = frames[:, 1:H:2, 0::2]                                                                                    
-  in_img1[:, 2] = frames[:, 0:H:2, 1::2]                                                                                    
-  in_img1[:, 3] = frames[:, 1:H:2, 1::2]                                                                                    
-  in_img1[:, 4] = frames[:, H:H+H//4].reshape((-1, H//2,W//2))                                                              
-  in_img1[:, 5] = frames[:, H+H//4:H+H//2].reshape((-1, H//2,W//2))
-  return in_img1
+    H = (frames.shape[1]*2)//3                                                                                                
+    W = frames.shape[2]                                                                                                       
+    in_img1 = np.zeros((frames.shape[0], 6, H//2, W//2), dtype=np.uint8)                                                      
+                                                                                                                              
+    in_img1[:, 0] = frames[:, 0:H:2, 0::2]                                                                                    
+    in_img1[:, 1] = frames[:, 1:H:2, 0::2]                                                                                    
+    in_img1[:, 2] = frames[:, 0:H:2, 1::2]                                                                                    
+    in_img1[:, 3] = frames[:, 1:H:2, 1::2]                                                                                    
+    in_img1[:, 4] = frames[:, H:H+H//4].reshape((-1, H//2,W//2))                                                              
+    in_img1[:, 5] = frames[:, H+H//4:H+H//2].reshape((-1, H//2,W//2))
+    return in_img1
 
-imgs_med_model = np.zeros((len(imgs), 384, 512), dtype=np.uint8)
-for i, img in tqdm(enumerate(imgs)):
-  imgs_med_model[i] = transform_img(img, from_intr=eon_intrinsics, to_intr=medmodel_intrinsics, yuv=True,
-                                    output_size=(512,256))
-frame_tensors = frames_to_tensor(np.array(imgs_med_model)).astype(np.float32)/128.0 - 1.0
+def lane_following(image):
+    #matplotlib.use('Agg')
+    # camerafile = image#sys.argv[1]
+    supercombo = load_model('supercombo.keras')
 
+    # print(supercombo.summary())
 
-state = np.zeros((1,512))
-desire = np.zeros((1,8))
+    imgs_med_model = np.zeros((2, 384, 512), dtype=np.uint8)
+    state = np.zeros((1,512))
+    desire = np.zeros((1,8))
 
-cap = cv2.VideoCapture(camerafile)
+    cap = image
 
-for i in tqdm(range(len(frame_tensors) - 1)):
-  inputs = [np.vstack(frame_tensors[i:i+2])[None], desire, state]
-  outs = supercombo.predict(inputs)
-  parsed = parser(outs)
-  # Important to refeed the state
-  state = outs[-1]
-  pose = outs[-2]
-  ret, frame = cap.read()
-  frame = cv2.resize(frame, (640, 420))
-  # Show raw camera image
-  lll = [(int(128 - parsed["lll"][0][x] * 10), 420 - x*3) for x in range(0, len(parsed["lll"][0]))] # 8 was 16
-  rll = [(int(512 + parsed["rll"][0][x] * 10), 420 - x*3) for x in range(0, len(parsed["rll"][0]))] # was 512
-  path = [(int(320 - parsed["path"][0][x] * 10), 420 - x*3) for x in range(0, len(parsed["path"][0]))]
-  #print(path)
+    x_left = x_right = x_path = np.linspace(0, 192, 192)
+    (ret, previous_frame) = cap.read()
+    if not ret:
+        exit()
+    else:
+        img_yuv = cv2.cvtColor(previous_frame, cv2.COLOR_BGR2YUV_I420)
+        imgs_med_model[0] = transform_img(img_yuv, from_intr=eon_intrinsics, to_intr=medmodel_intrinsics, yuv=True,
+                                        output_size=(512,256))
+
+    filtered = 600
+    alpha = 0.1
+    while True:
+        plt.clf()
+        plt.title("lanes and path")
+        plt.xlim(0, 1200)
+        plt.ylim(800, 0)
+        (ret, current_frame) = cap.read()
+        if not ret:
+            break
+        frame = current_frame.copy()
+        img_yuv = cv2.cvtColor(current_frame, cv2.COLOR_BGR2YUV_I420)
+        imgs_med_model[1] = transform_img(img_yuv, from_intr=eon_intrinsics, to_intr=medmodel_intrinsics, yuv=True,
+                                        output_size=(512,256))
+        frame_tensors = frames_to_tensor(np.array(imgs_med_model)).astype(np.float32)/128.0 - 1.0
+
+        inputs = [np.vstack(frame_tensors[0:2])[None], desire, state]
+        outs = supercombo.predict(inputs)
+        parsed = parser(outs)
+        # Important to refeed the state
+        state = outs[-1]
+        pose = outs[-2]   # For 6 DoF Callibration
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        plt.imshow(frame)
+        new_x_left, new_y_left = transform_points(x_left, parsed["lll"][0])
+        new_x_right, new_y_right = transform_points(x_left, parsed["rll"][0])
+        new_x_path, new_y_path = transform_points(x_left, parsed["path"][0])
+        error = 600 - new_x_path[0]
+        deg = (new_x_path[-1] - new_x_path[0])
+        filtered = alpha*error + (1-alpha)*filtered
+        crossTrackError.publish(filtered)
+        plt.plot(new_x_left, new_y_left, label='transformed', color='w', linewidth=4)
+        plt.plot(new_x_right, new_y_right, label='transformed', color='w', linewidth=4)
+        plt.plot(new_x_path, new_y_path, label='transformed', color='green', linewidth=4)
+        imgs_med_model[0]=imgs_med_model[1]
+        userInterface.publish(plt) # this need to publish plotted ui
+        plt.pause(0.001)
+        if cv2.waitKey(10) & 0xFF == ord('q'):
+            break
+        
+
+  #plt.show()
   
-  pts1 = np.array(lll, np.int32)
-  pts1 = pts1.reshape((-1, 1 ,2))
-  #cv2.polylines(frame, [pts1], True, (255,255,255), 3)
-  pts2 = np.array(rll, np.int32)
-  pts2 = pts2.reshape((-1, 1 ,2))
-  #cv2.polylines(frame, [pts2], True, (0,255,255), 3)
-  pts3 = np.array(path, np.int32)
-  pts3 = pts3.reshape((-1, 1 ,2))
-  for c1 in lll:
-    cv2.circle(frame, c1, 1, (255,0,0), 5)
-  for c2 in rll:
-    cv2.circle(frame, c2, 1, (0,255,0), 5)
-  for c3 in path:
-    cv2.circle(frame, c3, 1, (255,255,255), 5)
-  #cv2.polylines(frame, [pts3], True, (255,0,255), 3)
-  cv2.imshow("modeld", frame)
-  
-  # Clean plot for next frame
-  plt.clf()
-  plt.xlim(-5,5)
-  plt.ylim(0,10)
-  plt.grid()
-  plt.gca().set_xlabel('Lateral (Crosstrack) Distance [m]')
-  plt.gca().set_xlabel('Longitudinal Distance [m]')
-  plt.gca().set_aspect('equal',adjustable='box')
-  plt.title("lanes and path")
-  # lll = left lane line
-  plt.plot(parsed["lll"][0], range(0,192), "b-", linewidth=1)
-  # rll = right lane line
-  plt.plot(parsed["rll"][0], range(0, 192), "r-", linewidth=1)
-  # path = path cool isn't it ?
-  plt.plot(parsed["path"][0], range(0, 192), "g-", linewidth=1)
-  #print(np.array(pose[0,:3]).shape)
-  #plt.scatter(pose[0,:3], range(3), c="y")
-  
-  # Needed to invert axis because standart left lane is positive and right lane is negative, so we flip the x axis
-  plt.gca().invert_xaxis()
-  plt.pause(0.001)
-  if cv2.waitKey(10) & 0xFF == ord('q'):
-        break
+VERBOSE=False
 
-plt.show()
+class image_feature:
+
+    def __init__(self):
+        '''Initialize ros publisher, ros subscriber'''
+        # topic where we publish
+        self.image_pub = rospy.Publisher("/output/compressed", 
+            CompressedImage, queue_size=1)
+        # self.bridge = CvBridge()
+
+        # subscribed Topic
+        self.subscriber = rospy.Subscriber("/camera_fm/camera_fm/image_raw",
+            Image, self.callback,  queue_size = 1)
+        if VERBOSE :
+            print "subscribed to /camera/image"
+
+
+    def callback(self, ros_data):
+        '''Callback function of subscribed topic. 
+        Here images get converted and features detected'''
+        if VERBOSE :
+            print 'received image of type: "%s"' % ros_data.format
+        #### direct conversion to CV2 ####
+        cv_image = bridge.imgmsg_to_cv2(ros_data, "bgr8")
+        
+        # ############################################################################################
+        # #### Feature detectors using CV2 #### 
+        # # "","Grid","Pyramid" + 
+        # # "FAST","GFTT","HARRIS","MSER","ORB","SIFT","STAR","SURF"
+        # feat_det = cv2.GFTTDetector.create()
+        # time1 = time.time()
+
+        # # convert np image to grayscale
+        # greyIm = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
+        # featPoints = feat_det.detect(greyIm)
+        # time2 = time.time()
+        # if VERBOSE :
+        #     print '%s detector found: %s points in: %s sec.'%(method,
+        #         len(featPoints),time2-time1)
+
+        # for featpoint in featPoints:
+        #     x,y = featpoint.pt
+        #     cv2.circle(cv_image,(int(x),int(y)), 3, (0,0,255), -1)
+        # #############################################################################################
+        
+        lane_following(cv_image)
+        # cv2.imshow('cv_img', cv_image)
+        # cv2.waitKey(2)
+
+        #### Create CompressedIamge ####
+        # msg = CompressedImage()
+        # msg.header.stamp = rospy.Time.now()
+        # msg.format = "jpeg"
+        # msg.data = np.array(cv2.imencode('.jpg', cv_image)[1]).tostring()
+        # Publish new image
+        # self.image_pub.publish(msg)
+        
+        #self.subscriber.unregister()
+
+def listener():
+    global cv_image, res, ourGuy
+  
+    rospy.init_node('linedetection',anonymous=True)
+    rate = rospy.Rate(12) # 12hz
+    topic = "/camera_fm/camera_fm/image_raw"
+    rospy.Subscriber(topic, Image, callback)
+    while not rospy.is_shutdown():
+    # publish pixel distance from car to line; -1 if not found
+        Help_Save_Me_From_this_eternal_torment.publish(ourGuy)
+        rate.sleep()
+        
+if __name__ == '__main__':
+    try:
+        listener()
+    except KeyboardInterrupt:
+        print("Goodbye")
