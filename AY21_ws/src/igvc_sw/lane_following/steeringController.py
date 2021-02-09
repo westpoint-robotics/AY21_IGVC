@@ -63,7 +63,8 @@ def SteeringController():
     rospy.init_node('SteeringController', anonymous=True)
     steer_pub = rospy.Publisher('/pacmod/as_rx/steer_cmd', PositionWithSpeed, queue_size=10)
     rospy.Subscriber('/selfdrive/state', Int8, state_callback)
-    rospy.Subscriber("/y_distance", Float32, steeringAngleCalculator)
+    #rospy.Subscriber("/y_distance", Float32, steeringAngleCalculator)
+    rospy.Subscriber("/cross_track_error", Float32, steeringAngleCalculator)
 
     steer_cmd.angular_velocity_limit = 3.3  # Adjust this!!
 
