@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from lanes_image_space import transform_points
 import os
 from tensorflow.keras.models import load_model
-from tools.lib.parser import parser
+from parser import parser
 import cv2
 import sys, time
 
@@ -22,6 +22,7 @@ from cv_bridge import CvBridge
 # Ros Messages
 from sensor_msgs.msg import CompressedImage
 from sensor_msgs.msg import Image
+from std_msgs.msg import Float64
 
 
 MAX_DISTANCE = 140.
@@ -180,10 +181,10 @@ def listener():
     rospy.init_node('linedetection',anonymous=True)
     rate = rospy.Rate(12) # 12hz
     topic = "/camera_fm/camera_fm/image_raw"
-    rospy.Subscriber(topic, Image, callback)
+    rospy.Subscriber(topic, Image, lane_following)
     while not rospy.is_shutdown():
     # publish pixel distance from car to line; -1 if not found
-        Help_Save_Me_From_this_eternal_torment.publish(ourGuy)
+        #Help_Save_Me_From_this_eternal_torment.publish(ourGuy)
         rate.sleep()
         
 if __name__ == '__main__':
