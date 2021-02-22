@@ -36,16 +36,15 @@ LEAD_X_SCALE = 10
 LEAD_Y_SCALE = 10
 WIDTH = 1920
 HEIGHT = 1440
-mm = 0
 
 bridge = CvBridge()
 
 # We need a place to keep two separate consecutive image frames
 # since that's what SuperCombo uses
-previous_frame = np.zeros((HEIGHT, WIDTH), dtype=np.uint8)
-current_frame = np.zeros((HEIGHT, WIDTH), dtype=np.uint8)
-# previous_frame = np.zeros((256, 512), dtype=np.uint8)
-# current_frame = np.zeros((256, 512), dtype=np.uint8)
+#previous_frame = np.zeros((HEIGHT, WIDTH), dtype=np.uint8)
+#current_frame = np.zeros((HEIGHT, WIDTH), dtype=np.uint8)
+previous_frame = np.zeros((256, 512), dtype=np.uint8)
+current_frame = np.zeros((256, 512), dtype=np.uint8)
 
 crossTrackError = rospy.Publisher('/cross_track_error', Float32, queue_size=1)
 
@@ -63,8 +62,9 @@ def frames_to_tensor(frames):
   return in_img1
 
 def lane_following(image):
-    global supercombo, graph, mm
+    global supercombo, graph
     # print(supercombo.summary())
+    #initial = time.time()
     imgs_med_model = np.zeros((2, 384, 512), dtype=np.uint8)
     # imgs_med_model = np.zeros((2, HEIGHT, WIDTH), dtype=np.uint8)
     state = np.zeros((1,512)) #################################################
@@ -83,9 +83,9 @@ def lane_following(image):
     #print "AFTER: " + str(cap.shape)
     # print cap.shape # (1440, 1920, 3)
 
-    # filtered = 600
-    filtered = WIDTH//2
-    alpha = 0.1
+    filtered = 0
+    #filtered = WIDTH//2
+    alpha = 0.8
     plt.clf()
     plt.title("lanes and path")
     plt.xlim(0, 1200)
@@ -125,30 +125,21 @@ def lane_following(image):
     new_x_left, new_y_left = transform_points(x_left, parsed["lll"][0])
     new_x_right, new_y_right = transform_points(x_right, parsed["rll"][0])
     new_x_path, new_y_path = transform_points(x_path, parsed["path"][0])
-    # new_x_left = [x*2 for x in new_x_left]
-    # new_y_left = [x*2 for x in new_y_left]
-    # new_x_right = [x*2 for x in new_x_right]
-    # new_y_right = [x*2 for x in new_y_right]
-    # new_x_path = [x*2 for x in new_x_path]
-    # new_y_path = [x*2 for x in new_y_path]
 
-    error = WIDTH//2 - new_x_path[0]
-    #print 'new_x_path[0]: ', new_x_path[0]
-    #print 'error [pixels]: ', error
-    # deg = (new_x_path[-1] - new_x_path[0])
+    error = 600 - new_x_path[0]
     filtered = alpha*error + (1-alpha)*filtered
     crossTrackError.publish(filtered)
-    mm = max(max(new_y_right), mm)
-    #print mm
     plt.plot(new_x_left, new_y_left, label='transformed', color='w', linewidth=4)
     plt.plot(new_x_right, new_y_right, label='transformed', color='w', linewidth=4)
     plt.plot(new_x_path, new_y_path, label='transformed', color='green', linewidth=4)
     imgs_med_model[0]=imgs_med_model[1]
+    #print time.time() - initial
     plt.pause(0.001)
 #    plt.show()
 
 def load_models():
     global sess
+    initial = time.time()
     # tf_config = some_custom_config
     sess = tf.Session()#config=tf_config
     set_session(sess)
@@ -161,13 +152,13 @@ def load_models():
 
 def listener():
     global cv_image, res, ourGuy
-    
+    #initial = time.time()
     rospy.init_node('linedetection',anonymous=True)
-    rate = rospy.Rate(12) # 12hz
+    rate = rospy.Rate(60) # 12hz
     topic = "/camera_fm/camera_fm/image_raw"
     load_models()
+    #print time.time() - initial
     rospy.Subscriber(topic, Image, lane_following)
-    
     while not rospy.is_shutdown():
     # publish pixel distance from car to line; -1 if not found
         rate.sleep()        

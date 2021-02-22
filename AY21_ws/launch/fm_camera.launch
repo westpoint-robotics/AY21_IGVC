@@ -31,7 +31,7 @@
 		    <param name="acquisition_mode" value="Continuous"/>
 
 		    <!-- Acquisition rate in fps -->
-		    <param name="acquisition_rate" value="12"/>
+		    <param name="acquisition_rate" value="60"/>
 
 		    <!-- Pixel format:
 			    1. Mono8
