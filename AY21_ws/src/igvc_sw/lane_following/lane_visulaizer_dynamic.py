@@ -45,6 +45,7 @@ cap = cv2.VideoCapture(camerafile)
 
 x_left = x_right = x_path = np.linspace(0, 192, 192)
 (ret, previous_frame) = cap.read()
+print previous_frame.shape
 if not ret:
    exit()
 else:

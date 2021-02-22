@@ -52,6 +52,7 @@ def frames_to_tensor(frames):
     """
     Dr. Gonzalez added shape transformation
     """
+    #print frames.shape
     temp = np.zeros((2, 256, 512), dtype=np.uint8)
     temp[0] = cv2.resize(frames[0], (512, 384))[64:320, :]
     temp[1] = cv2.resize(frames[1], (512, 384))[64:320, :]
@@ -72,8 +73,8 @@ def frames_to_tensor(frames):
     #print frames.shape
     #print frames[:, H//2:H//2+H//4].shape
     #print frames[:, H//2+H//4:H//2+H//2].shape
-    in_img1[:, 4] = frames[:, H//2:H//2+H//4].reshape((-1, H//2,W//2))
-    in_img1[:, 5] = frames[:, H//2+H//4:H//2+H//2].reshape((-1, H//2,W//2))
+    in_img1[:, 4] = frames[:, H//2:H//2 + H//4].reshape((-1, H//2,W//2))
+    in_img1[:, 5] = frames[:, H//2 + H//4:H//2*2].reshape((-1, H//2,W//2))
 
     #print in_img1.shape
     return in_img1
@@ -81,15 +82,17 @@ def frames_to_tensor(frames):
 def lane_following(image):
     global supercombo, graph
     # print(supercombo.summary())
-    #imgs_med_model = np.zeros((2, 256, 512), dtype=np.uint8)
-    imgs_med_model = np.zeros((2, HEIGHT, WIDTH), dtype=np.uint8)
+    imgs_med_model = np.zeros((2, 384, 512), dtype=np.uint8)
+    # imgs_med_model = np.zeros((2, HEIGHT, WIDTH), dtype=np.uint8)
     state = np.zeros((1,512)) #################################################
-    #state = np.zeros((1,WIDTH))
+    # state = np.zeros((1,WIDTH))
     desire = np.zeros((1,8))
 
     x_left = x_right = x_path = np.linspace(0, 192, 192)
 
     cap = bridge.imgmsg_to_cv2(image, desired_encoding="bgr8")
+    #cap.resize((256, 512, 3))
+    print cap.shape
     # print cap.shape # (1440, 1920, 3)
 
     # filtered = 600
@@ -106,10 +109,10 @@ def lane_following(image):
     frame = current_frame.copy()
     img_yuv = cv2.cvtColor(current_frame, cv2.COLOR_BGR2YUV_I420)
     # frame is a list of 1440 x 1920
-    # imgs_med_model[1] = transform_img(img_yuv, from_intr=eon_intrinsics, to_intr=medmodel_intrinsics, yuv=True, output_size=(512,256))
-    imgs_med_model[1] = transform_img(img_yuv, from_intr=eon_intrinsics, to_intr=medmodel_intrinsics, yuv=True, output_size=(WIDTH,WIDTH/2)) ##########################################
+    imgs_med_model[1] = transform_img(img_yuv, from_intr=eon_intrinsics, to_intr=medmodel_intrinsics, yuv=True, output_size=(512,256)) #This order is correct, outputsize = (maxWidth, maxHeight)
+    # imgs_med_model[1] = transform_img(img_yuv, from_intr=eon_intrinsics, to_intr=medmodel_intrinsics, yuv=True, output_size=(WIDTH,HEIGHT*2/3)) ##########################################
     
-    frame_tensors = frames_to_tensor(np.array(imgs_med_model)).astype(np.float32)/128.0 - 1.0 ###################################################
+    frame_tensors = frames_to_tensor(np.array(imgs_med_model)).astype(np.float32)/128.0 - 1.0 
     # print frame_tensors.shape # (2, 6, 128, 960)
     
     inputs = [np.vstack(frame_tensors[0:2])[None], desire, state] #########################################################
@@ -147,6 +150,7 @@ def lane_following(image):
     # deg = (new_x_path[-1] - new_x_path[0])
     filtered = alpha*error + (1-alpha)*filtered
     crossTrackError.publish(filtered)
+    #print max(new_x_right)
     plt.plot(new_x_left, new_y_left, label='transformed', color='w', linewidth=4)
     plt.plot(new_x_right, new_y_right, label='transformed', color='w', linewidth=4)
     plt.plot(new_x_path, new_y_path, label='transformed', color='green', linewidth=4)
