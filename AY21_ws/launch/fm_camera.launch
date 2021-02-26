@@ -5,7 +5,7 @@
 
 	    <node name="camera_fm" pkg="avt_vimba_camera" type="mono_camera_node" output="screen">
 		    <param name="guid" value="DEV_000F315C1E80"/>
-		    <param name="ip" value=""/>
+		    <param name="ip" value="192.168.1.23"/>
 		    <param name="camera_info_url" value="file://$(find AY20_IGVC)/launch/config/calibrations/camera_fm.yaml"/>
 		    <param name="frame_id" value="middle_optical"/>
 		    <param name="trig_timestamp_topic" value=""/>
@@ -31,7 +31,7 @@
 		    <param name="acquisition_mode" value="Continuous"/>
 
 		    <!-- Acquisition rate in fps -->
-		    <param name="acquisition_rate" value="12"/>
+		    <param name="acquisition_rate" value="60"/>
 
 		    <!-- Pixel format:
 			    1. Mono8
