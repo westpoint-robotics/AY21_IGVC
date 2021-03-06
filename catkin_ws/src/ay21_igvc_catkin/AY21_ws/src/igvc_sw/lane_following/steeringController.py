@@ -71,7 +71,6 @@ def SteeringController():
     rate = rospy.Rate(12) #12hz
     while not rospy.is_shutdown():
         if state:
-            omega=0.2
             pac_cmd = rad2Pac(omega)
             steer_cmd.angular_position = rad2Pac(omega)
             steer_pub.publish(steer_cmd)

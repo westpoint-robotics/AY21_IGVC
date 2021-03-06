@@ -1,17 +1,21 @@
 #!/usr/bin/env python
-
+import cv2
+import sys, time, os
 from common.transformations.camera import transform_img, eon_intrinsics
 from common.transformations.model import medmodel_intrinsics
 import numpy as np
 # from tqdm import tqdm
 import matplotlib
 import matplotlib.pyplot as plt
+import warnings
+warnings.simplefilter("ignore")
+warnings.filterwarnings("ignore", category=FutureWarning)
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+import tensorflow as tf
 from lanes_image_space import transform_points
 from tensorflow.keras.models import load_model
-import tensorflow as tf
 from parser import parser
-import cv2
-import sys, time, os
+
 
 # numpy and scipy
 from scipy.ndimage import filters
