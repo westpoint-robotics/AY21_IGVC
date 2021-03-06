@@ -90,8 +90,8 @@ def constVelocity():
     accel_pub = rospy.Publisher('pacmod/as_rx/accel_cmd', PacmodCmd, queue_size = 10)
     brake_pub = rospy.Publisher('/pacmod/as_rx/brake_cmd', PacmodCmd, queue_size = 10)
     rospy.Subscriber('/pacmod/as_tx/vehicle_speed', Float64, speedCallBack)
-    rospy.Sublisher('/speed_applied', Float64, whiteLineCallBack)
-    rospy.Sublisher('/stop_speed', Float64, whiteLineCallBack)
+    #rospy.Subscriber('/speed_applied', Float64, whiteLineCallBack)
+    #rospy.Subscriber('/stop_speed', Float64, whiteLineCallBack)
     rospy.Subscriber('/selfdrive/state', Int8, state_callback)
     accel = PacmodCmd()
     accel.f64_cmd = 0

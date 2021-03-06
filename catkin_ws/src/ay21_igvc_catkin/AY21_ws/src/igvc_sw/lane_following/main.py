@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from common.transformations.camera import transform_img, eon_intrinsics
 from common.transformations.model import medmodel_intrinsics
 import numpy as np
@@ -48,6 +50,12 @@ current_frame = np.zeros((256, 512), dtype=np.uint8)
 
 crossTrackError = rospy.Publisher('/cross_track_error', Float32, queue_size=1)
 
+"""
+matplotlib plt setup IOT speed up the plotting
+"""
+
+
+
 def frames_to_tensor(frames):                                                                                               
   H = (frames.shape[1]*2)//3                                                                                                
   W = frames.shape[2]                                                                                                       
@@ -92,7 +100,7 @@ def lane_following(image):
     # plt.xlim(0, WIDTH)
     plt.ylim(800, 0)
     # plt.ylim(HEIGHT, 0)
-
+        
     current_frame = cap
     frame = current_frame.copy()
     img_yuv = cv2.cvtColor(current_frame, cv2.COLOR_BGR2YUV_I420)
@@ -103,7 +111,7 @@ def lane_following(image):
     frame_tensors = frames_to_tensor(np.array(imgs_med_model)).astype(np.float32)/128.0 - 1.0 
     # print frame_tensors.shape # (2, 6, 128, 960)
     
-    inputs = [np.vstack(frame_tensors[0:2])[None], desire, state] #########################################################
+    inputs = [np.vstack(frame_tensors[0:2])[None], desire, state] 
     # inputs = [np.vstack(frame_tensors[0:2])[None], np.zeros((1,8)), state]
     # print len(frame_tensors[0][0])
 
@@ -120,7 +128,7 @@ def lane_following(image):
     pose = outs[-2]   # For 6 DoF Callibration
     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-    plt.imshow(frame)
+    plt.imshow(frame, interpolation=None)###################################
 
     new_x_left, new_y_left = transform_points(x_left, parsed["lll"][0])
     new_x_right, new_y_right = transform_points(x_right, parsed["rll"][0])
@@ -135,19 +143,20 @@ def lane_following(image):
     imgs_med_model[0]=imgs_med_model[1]
     #print time.time() - initial
     plt.pause(0.001)
-#    plt.show()
+    #plt.show()
 
 def load_models():
     global sess
     initial = time.time()
     # tf_config = some_custom_config
-    sess = tf.Session()#config=tf_config
+    sess = tf.compat.v1.Session()#config=tf_config
     set_session(sess)
+    os.chdir('/home/user1/Desktop/ay21_igvc/catkin_ws/src/ay21_igvc_catkin/AY21_ws/src/igvc_sw/lane_following')
     global supercombo
-    supercombo = load_model('supercombo.keras')
-            # this is key : save the graph after loading the model
+    supercombo = tf.keras.models.load_model("supercombo.keras")
+    # this is key : save the graph after loading the model
     global graph
-    graph = tf.get_default_graph()
+    graph = tf.compat.v1.get_default_graph()
 
 
 def listener():

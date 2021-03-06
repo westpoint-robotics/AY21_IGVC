@@ -48,7 +48,7 @@ def rad2Pac(rad):
     return pac_cmd
 
 def steeringAngleCalculator(x):
-    global prev_e, eDot, omega
+    global prev_e, eDot, omega, prevTime
     e = x.data
     currentTime = rospy.get_time() 
     dt = currentTime - prevTime

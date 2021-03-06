@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  XBox Controller  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <node pkg="joy" type="joy_node" name="joy">
+      <param name="coalesce_interval" type="double" value="0.02"/>
+      <param name="default_trig_val" value="true"/>
+      <param name="deadzone" value="0.0"/>
+  </node>
+  
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  Camera  ~~~~~~~~~~~~~~~~~~~~~~~~ 
+  <include file="$(find ay21_igvc_catkin)/AY21_ws/launch/fm_camera.launch"/>-->
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  TELEOP  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <include file="$(find ay21_igvc_catkin)/AY21_ws/launch/pacmod_game_control.launch">
+    <arg name="controller_type" value="XBOX_ONE" />
+  </include>
+  
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  Vehicle Manager  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <node name="vehicle_manager_hl" pkg="ay21_igvc_catkin" type="vehicle_manager_hl.py" output="screen" required="True" />
+  
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  Self-drive Manager  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <node name="selfdrive_manager" pkg="ay21_igvc_catkin" type="selfdrive_node.py" output="screen" />
+  
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  Constant Velocity Controller  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <node name="speed_controller" pkg="ay21_igvc_catkin" type="constVelocity.py"/>
+  <node name="steering_controller" pkg="ay21_igvc_catkin" type="steeringController.py" />
+  
+
+  <node name="lane_following_module" pkg="ay21_igvc_catkin" type="main.py" />
+  
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  Arduino  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <node name="EStop_publisher" pkg="rosserial_python" type="serial_node.py">
+      <param name="port" value="/dev/arduino"/>
+  </node>
+  
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  self-kill  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!--<include file="$(find ay21_igvc_catkin)/AY21_ws/src/igvc_sw/high_level_vehicle/self_kill.py">  </include>
+  -->
+  <node name="self_kill_node" pkg="ay21_igvc_catkin" type="self_kill.py" />
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~ gem e2 launch ~~~~~~~~~~~~~~~~~~~~~~~ 
+  <include file="$(find ay21_igvc_catkin)/AY21_ws/launch/gem_e2.launch" />
+  -->
+  
+  <node name="user_input_node" pkg="ay21_igvc_catkin" type="user_input_node.py" output="screen" />
+  
+</launch>
