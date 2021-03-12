@@ -58,7 +58,21 @@ crossTrackError = rospy.Publisher('/cross_track_error', Float32, queue_size=1)
 matplotlib plt setup IOT speed up the plotting
 """
 
-
+def change_brightness(img):
+    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    h, s, v = cv2.split(hsv)
+    brightness = np.average(v)
+    value = int(brightness)
+    if brightness >= 50:
+        v[v < value] = value//2
+        v[v >= value] -= value
+    else:
+        limit = 255 - value
+        v[v > limit] = limit
+        v[v <= limit] += (50 - value)
+    final_hsv = cv2.merge((h, s, v))
+    img = cv2.cvtColor(final_hsv, cv2.COLOR_HSV2BGR)
+    return img
 
 def frames_to_tensor(frames):                                                                                               
   H = (frames.shape[1]*2)//3                                                                                                
@@ -104,7 +118,10 @@ def lane_following(image):
     # plt.xlim(0, WIDTH)
     plt.ylim(800, 0)
     # plt.ylim(HEIGHT, 0)
-        
+    
+    # applies brightness filter using HSV in CV2
+    cap = change_brightness(cap)
+
     current_frame = cap
     frame = current_frame.copy()
     img_yuv = cv2.cvtColor(current_frame, cv2.COLOR_BGR2YUV_I420)
@@ -138,7 +155,7 @@ def lane_following(image):
     new_x_right, new_y_right = transform_points(x_right, parsed["rll"][0])
     new_x_path, new_y_path = transform_points(x_path, parsed["path"][0])
 
-    error = 600 - new_x_path[0]
+    error = (-1)*(510 - new_x_path[0])/115
     filtered = alpha*error + (1-alpha)*filtered
     crossTrackError.publish(filtered)
     plt.plot(new_x_left, new_y_left, label='transformed', color='w', linewidth=4)
