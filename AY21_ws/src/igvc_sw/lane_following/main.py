@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from common.transformations.camera import transform_img, eon_intrinsics
 from common.transformations.model import medmodel_intrinsics
 import numpy as np
@@ -31,13 +32,8 @@ MAX_REL_V = 10.
 
 LEAD_X_SCALE = 10
 LEAD_Y_SCALE = 10
-<<<<<<< HEAD
-
-count = 0
-=======
 WIDTH = 1920
 HEIGHT = 1440
->>>>>>> e1b9c9a613621de4518af6b7b3ab698c350840b4
 
 bridge = CvBridge()
 
@@ -100,28 +96,12 @@ def lane_following(image):
     # state = np.zeros((1,WIDTH))
     desire = np.zeros((1,8))
 
-<<<<<<< HEAD
-    cap = bridge.imgmsg_to_cv2(image, desired_encoding="bgr8")
-    #print type(cap) #<type 'numpy.ndarray'>
-
-    x_left = x_right = x_path = np.linspace(0, 192, 192)
-    #(ret, previous_frame) = cap.read()
-    ret = 1
-    previous_frame = cap
-#    if not ret:
-#        exit()
-    if 1:
-        img_yuv = cv2.cvtColor(previous_frame, cv2.COLOR_BGR2YUV_I420)
-        imgs_med_model[0] = transform_img(img_yuv, from_intr=eon_intrinsics, to_intr=medmodel_intrinsics, yuv=True,
-                                        output_size=(512,256))
-=======
     x_left = x_right = x_path = np.linspace(0, 192, 192)
 
     cap = bridge.imgmsg_to_cv2(image, desired_encoding="bgr8")
     #cap.resize((256, 512, 3))
     print cap.shape
     # print cap.shape # (1440, 1920, 3)
->>>>>>> e1b9c9a613621de4518af6b7b3ab698c350840b4
 
     # filtered = 600
     filtered = WIDTH//2
@@ -165,19 +145,6 @@ def lane_following(image):
 
     plt.clf()
     plt.title("lanes and path")
-<<<<<<< HEAD
-    plt.xlim(0, 1200)
-    plt.ylim(800, 0)
-    #(ret, current_frame) = cap.read()
-    ret = 1
-    current_frame = cap
-    frame = current_frame.copy()
-    img_yuv = cv2.cvtColor(current_frame, cv2.COLOR_BGR2YUV_I420)
-    imgs_med_model[1] = transform_img(img_yuv, from_intr=eon_intrinsics, to_intr=medmodel_intrinsics, yuv=True, output_size=(512,256))
-    frame_tensors = frames_to_tensor(np.array(imgs_med_model)).astype(np.float32)/128.0 - 1.0
-    inputs = [np.vstack(frame_tensors[0:2])[None], desire, state]
-    outs = supercombo.predict(inputs)
-=======
     # plt.xlim(0, 1200)
     plt.xlim(0, WIDTH)
     # plt.ylim(800, 0)
@@ -204,7 +171,6 @@ def lane_following(image):
     previous_frame = current_frame
     
     #K.clear_session()
->>>>>>> e1b9c9a613621de4518af6b7b3ab698c350840b4
     parsed = parser(outs)
     # Important to refeed the state
     state = outs[-1]
@@ -214,12 +180,6 @@ def lane_following(image):
     plt.imshow(frame)
 
     new_x_left, new_y_left = transform_points(x_left, parsed["lll"][0])
-<<<<<<< HEAD
-    new_x_right, new_y_right = transform_points(x_left, parsed["rll"][0])
-    new_x_path, new_y_path = transform_points(x_left, parsed["path"][0])
-    error = 600 - new_x_path[0]
-    deg = (new_x_path[-1] - new_x_path[0])
-=======
     new_x_right, new_y_right = transform_points(x_right, parsed["rll"][0])
     new_x_path, new_y_path = transform_points(x_path, parsed["path"][0])
     # new_x_left = [x*2 for x in new_x_left]
@@ -233,7 +193,6 @@ def lane_following(image):
     #print 'new_x_path[0]: ', new_x_path[0]
     #print 'error [pixels]: ', error
     # deg = (new_x_path[-1] - new_x_path[0])
->>>>>>> e1b9c9a613621de4518af6b7b3ab698c350840b4
     filtered = alpha*error + (1-alpha)*filtered
     crossTrackError.publish(filtered)
     #print max(new_x_right)
