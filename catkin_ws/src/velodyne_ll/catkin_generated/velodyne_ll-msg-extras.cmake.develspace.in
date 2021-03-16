@@ -1,0 +1,2 @@
+set(velodyne_ll_MESSAGE_FILES "/home/user1/code/rtk/src/TARDEC/tardec_drivers/velodyne_ll/msg/Chunk.msg;/home/user1/code/rtk/src/TARDEC/tardec_drivers/velodyne_ll/msg/Raw.msg;/home/user1/code/rtk/src/TARDEC/tardec_drivers/velodyne_ll/msg/Slice.msg")
+set(velodyne_ll_SERVICE_FILES "")
