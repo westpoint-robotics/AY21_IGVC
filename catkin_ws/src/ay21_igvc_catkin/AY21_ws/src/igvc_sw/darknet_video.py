@@ -74,7 +74,7 @@ def set_saved_video(input_video, output_video, size):
     return video
 
 
-def video_capture(frame_queue, darknet_image_queue):
+"""def video_capture(frame_queue, darknet_image_queue):
     while cap.isOpened():
         #cv2.videocapture and .read() returns a boolean and a frame.
         #we hardcoded the ret to true because bridge to cv2 only returns the frame 
@@ -90,23 +90,32 @@ def video_capture(frame_queue, darknet_image_queue):
         darknet.copy_image_from_bytes(img_for_detect, frame_resized.tobytes())
         darknet_image_queue.put(img_for_detect)
     cap.release()
+"""
+
+"""def inference(darknet_image_queue, detections_queue, fps_queue):
+    darknet_image = darknet_image_queue.get()
+    prev_time = time.time()
+    detections = darknet.detect_image(network, class_names, darknet_image, thresh=args.thresh)
+    detections_queue.put(detections)
+    fps = int(1/(time.time() - prev_time))
+    fps_queue.put(fps)
+    print("FPS: {}".format(fps))
+    darknet.print_detections(detections, args.ext_output)
+    darknet.free_image(darknet_image)
+"""
+def inference(img, detections_queue, fps_queue):
+    darknet_image = img
+    prev_time = time.time()
+    detections = darknet.detect_image(network, class_names, darknet_image, thresh=args.thresh)
+    detections_queue.put(detections)
+    fps = int(1/(time.time() - prev_time))
+    fps_queue.put(fps)
+    print("FPS: {}".format(fps))
+    darknet.print_detections(detections, args.ext_output)
+    darknet.free_image(darknet_image)
 
 
-def inference(darknet_image_queue, detections_queue, fps_queue):
-    while cap.isOpened():
-        darknet_image = darknet_image_queue.get()
-        prev_time = time.time()
-        detections = darknet.detect_image(network, class_names, darknet_image, thresh=args.thresh)
-        detections_queue.put(detections)
-        fps = int(1/(time.time() - prev_time))
-        fps_queue.put(fps)
-        print("FPS: {}".format(fps))
-        darknet.print_detections(detections, args.ext_output)
-        darknet.free_image(darknet_image)
-    cap.release()
-
-
-def drawing(frame_queue, detections_queue, fps_queue):
+"""def drawing(frame_queue, detections_queue, fps_queue):
     random.seed(3)  # deterministic bbox colors
     video = set_saved_video(cap, args.out_filename, (width, height))
     while cap.isOpened():
@@ -125,8 +134,29 @@ def drawing(frame_queue, detections_queue, fps_queue):
     cap.release()
     video.release()
     cv2.destroyAllWindows()
+"""
 
-def main():
+def drawing(img, detections_queue, fps_queue):
+    random.seed(3)  # deterministic bbox colors
+    #video = set_saved_video(cap, args.out_filename, (width, height))
+    frame_resized = img
+    detections = detections_queue.get()
+    fps = fps_queue.get()
+    if frame_resized is not None:
+        image = darknet.draw_boxes(detections, frame_resized, class_colors)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        #if args.out_filename is not None:
+        #    video.write(image)
+        if not args.dont_show:
+            cv2.imshow('Inference', image)
+        if cv2.waitKey(fps) == 27:
+            pass
+    cap.release()
+    #video.release()
+    cv2.destroyAllWindows()
+
+def main2(img):
+    #Queues created to manage multithreading
     frame_queue = Queue()
     darknet_image_queue = Queue(maxsize=1)
     detections_queue = Queue(maxsize=1)
@@ -150,10 +180,10 @@ def main():
     #input path!!!! if zero its zero, else it returns the file path string
     #input_path = str2int(args.input)
     #Capture
-    cap = bridge.imgmsg_to_cv2(image, desired_encoding="bgr8")
-    Thread(target=video_capture, args=(frame_queue, darknet_image_queue)).start()
-    Thread(target=inference, args=(darknet_image_queue, detections_queue, fps_queue)).start()
-    Thread(target=drawing, args=(frame_queue, detections_queue, fps_queue)).start()
+    cap = bridge.imgmsg_to_cv2(img, desired_encoding="bgr8")
+    #Thread(target=video_capture, args=(frame_queue, darknet_image_queue)).start()
+    Thread(target=inference, args=(cap, detections_queue, fps_queue)).start()
+    Thread(target=drawing, args=(cap, detections_queue, fps_queue)).start()
 
 if __name__ == '__main__':
     try:
@@ -161,8 +191,12 @@ if __name__ == '__main__':
         rospy.init_node('objectdetection',anonymous=True)
         rate = rospy.Rate(60)
         topic = "/camera_fm/camera_fm/image_raw"
-        main()
-        
+        rospy.Subscriber(topic, Image, main2)
+    while not rospy.is_shutdown():
+    # publish pixel distance from car to line; -1 if not found
+        rate.sleep()        
 
     except KeyboardInterrupt:
         print("But I'm alive!!!!!")
+
+#
