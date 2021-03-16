@@ -13,7 +13,7 @@
 
       <param name="vehicle_frame" type="string" value="rack_link"/>
             
-      <param name="filter_filename" type="string" value="$(find gem_e2)/launch/config/velodyne.filter"/>
+      <param name="filter_filename" type="string" value="$(find ay21_igvc_catkin)/AY21_ws/launch/rtkstuff_config/calibrations/velodyne.filter"/>
       
       <param name="lower_filter_min_x" type="double" value="-0.6"/>
       <param name="lower_filter_max_x" type="double" value="3.25"/>
