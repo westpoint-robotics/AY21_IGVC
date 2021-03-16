@@ -1,0 +1,1 @@
+/usr/bin/c++  -fPIC -O2 -g -DNDEBUG  -shared -Wl,-soname,libgtest_main.so -o libgtest_main.so CMakeFiles/gtest_main.dir/src/gtest_main.cc.o  -L/home/user1/code/rtk/build/velodyne_ll/gtest/gtest/src -lpthread libgtest.so -lpthread -Wl,-rpath,/home/user1/code/rtk/build/velodyne_ll/gtest/gtest/src:/home/user1/code/rtk/build/velodyne_ll/gtest/gtest 

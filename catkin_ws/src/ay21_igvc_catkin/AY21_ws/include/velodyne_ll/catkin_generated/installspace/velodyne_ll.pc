@@ -1,0 +1,8 @@
+prefix=/opt/rtk/kinetic
+
+Name: velodyne_ll
+Description: Description of velodyne_ll
+Version: 2.8.3
+Cflags: -I/opt/rtk/kinetic/include
+Libs: -L/opt/rtk/kinetic/lib 
+Requires: geometry_msgs std_msgs message_runtime pcl_ros roscpp sensor_msgs tardec_msgs tf

@@ -1,6 +1,6 @@
 <launch>
   <group ns="lidar">
-    <node pkg="velodyne_ll" type="interface" name="interface" output="screen">
+    <node pkg="ay21_igvc_catkin" type="interface" name="interface" output="screen">
 
       <param name="cloud_rate" type="double" value="10.0"/>
       <param name="status_rate" type="double" value="2.0"/>
