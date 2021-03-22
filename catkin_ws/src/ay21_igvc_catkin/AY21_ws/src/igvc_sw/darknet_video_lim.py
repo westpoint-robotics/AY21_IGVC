@@ -107,6 +107,7 @@ def inference(img, detections_queue, fps_queue):
     darknet_image = img
     prev_time = time.time()
     detections = darknet.detect_image(network, class_names, darknet_image, thresh=args.thresh)
+    #runs the image through the detector and outputs it. 
     detections_queue.put(detections)
     fps = int(1/(time.time() - prev_time))
     fps_queue.put(fps)
