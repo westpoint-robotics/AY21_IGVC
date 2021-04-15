@@ -159,7 +159,7 @@ def detect(net, meta, image, thresh=.5, hier_thresh=.5, nms=.45):
                     pub_state.data = [b.w * b.h]
                     #print (pub_state.data)
                     objects.append(0)
-                if meta.names[i] == "persom":
+                if meta.names[i] == "person":
                     objects.append(1)
         
     object_list.data = objects
@@ -201,8 +201,8 @@ def listener():
         rate.sleep()
         
 if __name__ == "__main__":
-    net = load_net("/home/user1/code/IGVC/src/AY20_IGVC/src/object_recognition/darknet_test/cfg/yolov3.cfg", "/home/user1/code/IGVC/src/AY20_IGVC/src/object_recognition/darknet_test/yolov3.weights", 0)
-    meta = load_meta("/home/user1/code/IGVC/src/AY20_IGVC/src/object_recognition/darknet_test/cfg/coco.data")
+    net = load_net("/home/user1/Desktop/ay21_igvc/catkin_ws/src/ay21_igvc_catkin/AY21_ws/src/igvc_sw/darknet/cfg/yolov4.cfg", "/home/user1/Desktop/ay21_igvc/catkin_ws/src/ay21_igvc_catkin/AY21_ws/src/igvc_sw/darknet/yolov4.weights", 0)
+    meta = load_meta("/home/user1/Desktop/ay21_igvc/catkin_ws/src/ay21_igvc_catkin/AY21_ws/src/igvc_sw/darknet/cfg/coco.data")
     #r = detect(net, meta, "data/dog.jpg")
     #print r
     try:
