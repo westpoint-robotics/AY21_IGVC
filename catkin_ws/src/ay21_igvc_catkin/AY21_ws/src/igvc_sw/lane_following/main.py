@@ -42,6 +42,9 @@ LEAD_X_SCALE = 10
 LEAD_Y_SCALE = 10
 WIDTH = 1920
 HEIGHT = 1440
+CENTER_PIXEL = 510
+SCALING_FACTOR = 115
+DISCOUNT_RATE = 0.8
 
 CENTER_PIXEL = 510
 SCALING_FACTOR = 115
@@ -60,6 +63,12 @@ crossTrackError = rospy.Publisher('/cross_track_error', Float32, queue_size=1)
 """
 matplotlib plt setup IOT speed up the plotting
 """
+
+def discount(arr):
+    res = 0
+    for i in arr[::-1]:
+        res = DISCOUNT_RATE*i + (1-DISCOUNT_RATE)*res
+    return res
 
 def change_brightness(img):
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
@@ -166,6 +175,8 @@ def lane_following(image):
     new_x_path, new_y_path = transform_points(x_path, parsed["path"][0])
 
     error = (discount(parsed["path"]) - CENTER_PIXEL)/SCALING_FACTOR
+    #error = (-1)*(510 - new_x_path[0])/115
+    #error = (discount(new_x_path)-CENTER_PIXEL)/SCALING_FACTOR
     filtered = alpha*error + (1-alpha)*filtered
     crossTrackError.publish(filtered)
     plt.plot(new_x_left, new_y_left, label='transformed', color='w', linewidth=4)
