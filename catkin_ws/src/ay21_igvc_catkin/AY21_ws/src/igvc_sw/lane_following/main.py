@@ -1,15 +1,21 @@
+#!/usr/bin/env python
+import cv2
+import sys, time, os
 from common.transformations.camera import transform_img, eon_intrinsics
 from common.transformations.model import medmodel_intrinsics
 import numpy as np
 # from tqdm import tqdm
 import matplotlib
 import matplotlib.pyplot as plt
+import warnings
+warnings.simplefilter("ignore")
+warnings.filterwarnings("ignore", category=FutureWarning)
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+import tensorflow as tf
 from lanes_image_space import transform_points
 from tensorflow.keras.models import load_model
-import tensorflow as tf
 from parser import parser
-import cv2
-import sys, time, os
+
 
 # numpy and scipy
 from scipy.ndimage import filters
@@ -37,6 +43,9 @@ LEAD_Y_SCALE = 10
 WIDTH = 1920
 HEIGHT = 1440
 
+CENTER_PIXEL = 510
+SCALING_FACTOR = 115
+
 bridge = CvBridge()
 
 # We need a place to keep two separate consecutive image frames
@@ -47,6 +56,33 @@ previous_frame = np.zeros((256, 512), dtype=np.uint8)
 current_frame = np.zeros((256, 512), dtype=np.uint8)
 
 crossTrackError = rospy.Publisher('/cross_track_error', Float32, queue_size=1)
+
+"""
+matplotlib plt setup IOT speed up the plotting
+"""
+
+def change_brightness(img):
+    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    h, s, v = cv2.split(hsv)
+    brightness = np.average(v)
+    value = int(brightness)
+    if brightness >= 50:
+        v[v < value] = value//2
+        v[v >= value] -= value
+    else:
+        limit = 255 - value
+        v[v > limit] = limit
+        v[v <= limit] += (50 - value)
+    final_hsv = cv2.merge((h, s, v))
+    img = cv2.cvtColor(final_hsv, cv2.COLOR_HSV2BGR)
+    return img
+
+def discount(arr):
+    rate = 0.3
+    res = 0
+    for x in arr[::-1]:
+        res = res*rate + x
+    return res
 
 def frames_to_tensor(frames):                                                                                               
   H = (frames.shape[1]*2)//3                                                                                                
@@ -92,6 +128,9 @@ def lane_following(image):
     # plt.xlim(0, WIDTH)
     plt.ylim(800, 0)
     # plt.ylim(HEIGHT, 0)
+    
+    # applies brightness filter using HSV in CV2
+    cap = change_brightness(cap)
 
     current_frame = cap
     frame = current_frame.copy()
@@ -103,7 +142,7 @@ def lane_following(image):
     frame_tensors = frames_to_tensor(np.array(imgs_med_model)).astype(np.float32)/128.0 - 1.0 
     # print frame_tensors.shape # (2, 6, 128, 960)
     
-    inputs = [np.vstack(frame_tensors[0:2])[None], desire, state] #########################################################
+    inputs = [np.vstack(frame_tensors[0:2])[None], desire, state] 
     # inputs = [np.vstack(frame_tensors[0:2])[None], np.zeros((1,8)), state]
     # print len(frame_tensors[0][0])
 
@@ -120,13 +159,13 @@ def lane_following(image):
     pose = outs[-2]   # For 6 DoF Callibration
     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-    plt.imshow(frame)
+    plt.imshow(frame, interpolation=None)###################################
 
     new_x_left, new_y_left = transform_points(x_left, parsed["lll"][0])
     new_x_right, new_y_right = transform_points(x_right, parsed["rll"][0])
     new_x_path, new_y_path = transform_points(x_path, parsed["path"][0])
 
-    error = 600 - new_x_path[0]
+    error = (discount(parsed["path"]) - CENTER_PIXEL)/SCALING_FACTOR
     filtered = alpha*error + (1-alpha)*filtered
     crossTrackError.publish(filtered)
     plt.plot(new_x_left, new_y_left, label='transformed', color='w', linewidth=4)
@@ -135,19 +174,20 @@ def lane_following(image):
     imgs_med_model[0]=imgs_med_model[1]
     #print time.time() - initial
     plt.pause(0.001)
-#    plt.show()
+    #plt.show()
 
 def load_models():
     global sess
     initial = time.time()
     # tf_config = some_custom_config
-    sess = tf.Session()#config=tf_config
+    sess = tf.compat.v1.Session()#config=tf_config
     set_session(sess)
+    os.chdir('/home/user1/Desktop/ay21_igvc/catkin_ws/src/ay21_igvc_catkin/AY21_ws/src/igvc_sw/lane_following')
     global supercombo
-    supercombo = load_model('supercombo.keras')
-            # this is key : save the graph after loading the model
+    supercombo = tf.keras.models.load_model("supercombo.keras")
+    # this is key : save the graph after loading the model
     global graph
-    graph = tf.get_default_graph()
+    graph = tf.compat.v1.get_default_graph()
 
 
 def listener():

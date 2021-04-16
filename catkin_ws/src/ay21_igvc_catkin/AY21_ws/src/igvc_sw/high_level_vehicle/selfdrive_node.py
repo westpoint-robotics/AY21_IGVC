@@ -2,7 +2,7 @@
 
 import rospy, sys
 from std_msgs.msg import Int8, UInt16MultiArray, Float64, Bool
-from AY20_IGVC.msg import VisualObject, VisualObjectArray
+#from AY20_IGVC.msg import VisualObject, VisualObjectArray
 from pacmod_msgs.msg import PacmodCmd, PositionWithSpeed, SystemRptInt
 
 shift_cmd = PacmodCmd()
@@ -152,7 +152,7 @@ if __name__ == '__main__':
     rospy.Subscriber('/gem/operation_mode', Int8, hl_mode_callback)
     rospy.Subscriber('/selfdrive/user_input', Int8, user_input_callback)
     rospy.Subscriber('/pacmod/parsed_tx/shift_rpt', SystemRptInt, shift_rpt_callback)
-    rospy.Subscriber('/visual_objects', VisualObjectArray, cnn_callback)
+    #rospy.Subscriber('/visual_objects', VisualObjectArray, cnn_callback)
     
     rate = rospy.Rate(10)
     while not rospy.is_shutdown():
