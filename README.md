@@ -42,49 +42,24 @@ The USMA Autonomous Vehicle Research and Development (AVRAD) team develops, inco
 			* Hype Video: https://www.youtube.com/watch?v=CIum67LiaWE
 			* Prototype Test: https://www.youtube.com/watch?v=5vBCpxiEXXg
 
-### Launching Current Project
+### Current Project (AY21):
+
 * Navigate to primary working directory: >Home/Desktop/igvc/catkin_ws/src/ay21_igvc_catkin/src/igvc_sw
 * roslaunch master.launch
+	* Alternatively, run individual programs using the file names outlined in "A.V.R.A.D Vehicle Management" document.
 
-### Getting ROS to recognize a new workspace (for example, catkin_ws):
-* In terminal, run 'sudo gedit ~/.bashrc'
-* At the bottom of the file, add the line 'source [YOUR PATH]/catkin_ws/devel/setup.bash'
-* Save and exit, then new terminal windows
+### Software:
 
-### Getting darknet to run on a ROS machine:
+* Operating System: Ubuntu 16.04 		
+* ROS: Version: ROS Kinetic		
+* Python: Version: Python Version 2.7.12	
+* Yolo: Version: v4	
+* C++: Version: (latest version)
 
-* In terminal, run 'sudo gedit /etc/ld.so.conf.d/darknetLib.conf'
-* Then, paste the path to the libdarknet.so file, e.g., '/home/user1/catkin_ws/src/AY20_IGVC/src/object_recognition/darknet_test'
-* Save and exit, then run 'sudo ldconfig' in the terminal.
-* Now new terminal windows will work with it.
+* Arduino: Version: Arduino IDE (latest version)
 
-### Running whiteline controller:
-* In terminal, run 'fm_camera.launch'
-* In terminal, run 'whiteline_detector.py'
-* In terminal, run 'whiteLineController.py'
-* In terminal, run appropriate rosbag (I suggest IGVCStopsSign.bag) 'rosbag play bagfile'
-* In terminal, run 'rostopic echo /speed_applied'
-
-### Running lane finder and following controller:
-* In terminal, run 'fr_camera.launch'
-* In terminal, run 'rightLaneDetector.py'
-* In terminal, run 'steeringController.py'
-
-### Running darknet controller:
-* In terminal, run 'roscore'
-* In terminal, run 'darknet.py'
-* In terminal, run 'signController.py'
-* In terminal, run appropriate rosbag (I suggest IGVCStopsSign.bag) 'rosbag play bagfile'
-* In terminal, run 'rostopic echo /detection_status'
-
-### Final Stop Sign Detection Stuff:
-* Follow above insrtuctions for whiteline and darknet controller
-* In terminal, run 'constVelocity.py'
-* The vehicle should now send brake commands to pacmod as is appropriate
-
-### Launching the main package:
-
-* Run 'roslaunch AY20_IGVC gem_e2.launch
-<img src="/Images/IGVC.png"
-     alt="IGVC Cadets"
-     style="float: left; margin-right: 10px;" />
+### Hardware:
+* Vehicle: Polaris Gem e2
+* On-Board Computer: Autonomous Stuff Spectra
+* Cameras: Allied Vision Mako G-319C
+* Lidar: Velodyne HDL-64E S2
