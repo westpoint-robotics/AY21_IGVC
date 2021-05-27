@@ -1,0 +1,7 @@
+classes= 12
+train  = ultimate/test/train.txt
+valid = ultimate/test/valid.txt
+test = ultimate/test/test.txt
+names = ultimate/new_ultimate.names
+backup = backup/
+
