@@ -154,13 +154,23 @@ def detect(net, meta, image, thresh=.5, hier_thresh=.5, nms=.45):
             if dets[j].prob[i] > 0:
                 b = dets[j].bbox
                 res.append((meta.names[i], dets[j].prob[i], (b.x, b.y, b.w, b.h)))
-                if meta.names[i] == "stop sign":
+                if meta.names[i] == "stopsign":
                     #print(b.w*b.h)
                     pub_state.data = [b.w * b.h]
                     #print (pub_state.data)
                     objects.append(0)
-                if meta.names[i] == "persom":
+                if meta.names[i] == "pedestrian":
                     objects.append(1)
+                if meta.names[i] == "trafficbarrel":
+                    objects.append(2)
+                if meta.names[i] == "pothole":
+                    objects.append(3)
+                if meta.names[i] == "onewayright":
+                    objects.append(4)
+                if meta.names[i] == "onewayleft":
+                    objects.append(5)
+                if meta.names[i] == "car" or meta.names[i] == "truck" :
+                    objects.append(6)
         
     object_list.data = objects
     res = sorted(res, key=lambda x: -x[1])
