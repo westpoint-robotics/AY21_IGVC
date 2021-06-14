@@ -1,0 +1,79 @@
+name: Test Classifier
+classifier_type: dtree
+max_depth: 24
+use_1se_rule: false
+leaf_confidence_saturation: 125
+class_map:
+  - [0, 0]    # Unknown
+  - [5, 1]    # Grass
+  - [6, 2]    # Foliage
+  - [7, 4]    # Wood
+  - [8, 8]    # Dirt
+  - [9, 16]   # Pavement
+  - [10, 32]  # Rock
+  - [12, 128] # Sky
+feature_plugins:
+  - name: V Feature
+    type: feature_extraction_plugins/v_feature_processor
+    config:
+      image_topic: /vision/rear/left/binned/image_rect
+  - name: Disparity Feature
+    type: feature_extraction_plugins/disparity_feature_processor
+    config:
+      disparity_topic: /vision/rear/disparity
+      min_disparity: 2
+  - name: Ground Segmentation Features
+    type: feature_extraction_plugins/ground_segmentation_feature_processor
+    config:
+      segmentation_topic: /vision/rear/segmentation_data
+      label_feature: true
+      height_feature: true
+  - name: Spectral Features
+    type: feature_extraction_plugins/multichannel_spectral_feature_processor
+    config:
+      image_array_topic: /vision/rear/image_array
+      disparity_topic: /vision/rear/disparity
+      left_info_topic: /vision/rear/left/binned/camera_info
+      right_info_topic: /vision/rear/right/binned/camera_info
+      exact_sync: false
+      rectify_images: false
+      green_channel_equalization: true
+      normalize: true
+      blur_size: 9
+      left_index: 0
+      features:
+        - channel: 3
+        - channel: 1
+        - channel: 2
+        - channel: 3
+          operation: s
+          reference: 0
+        - channel: 2
+          operation: s
+          reference: 5
+  - name: Local Binary Pattern Features
+    type: feature_extraction_plugins/local_binary_pattern_feature_processor
+    config:
+      image_topic: /vision/rear/left/binned/image_rect
+      histogram_window: 33
+      k: 8
+  - name: Statistical Features
+    type: feature_extraction_plugins/statistical_feature_processor
+    config:
+      image_topic: /vision/rear/left/binned/image_rect
+      window_size: 21
+      average_roughness: true
+      rms_roughness: false
+      average_roughness_x: false
+      average_roughness_y: false
+      max_peak: false
+      min_valley: true
+      max_height: false
+      skewness: false
+      kurtosis: false
+      developed_interfacial_surface_ratio: true
+      max_profile_height_x: true
+      max_profile_height_y: true
+      rms_surface_slope: true
+      rms_slope_x: true
+      rms_slope_y: true

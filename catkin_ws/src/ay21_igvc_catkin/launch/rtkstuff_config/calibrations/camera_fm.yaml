@@ -1,0 +1,20 @@
+image_width: 2064
+image_height: 1544
+camera_name: middle_optical
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [1044.086264, 0.000000, 1051.047966, 0.000000, 1045.869711, 762.084868, 0.000000, 0.000000, 1.000000]
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  data: [-0.184063, 0.074083, 0.005065, -0.002716, 0.000000]
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000]
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [944.025513, 0.000000, 1035.415256, 0.000000, 0.000000, 960.070984, 777.439817, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000]

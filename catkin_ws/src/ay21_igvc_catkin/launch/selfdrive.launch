@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  Self-drive Manager  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <node name="selfdrive_manager" pkg="AY21_IGVC" type="selfdrive_node.py" output="screen" />
+  
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  Constant Velocity Controller  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <node name="speed_controller" pkg="AY21_IGVC" type="constVelocity.py" output="screen" /> 
+
+  <node name="steering_controller" pkg="AY21_IGVC" type="steeringController.py" />
+  
+  <node name="cnn" pkg="AY21_IGVC" type="darknet.py" />
+  
+  <!-- <node name="whiteline_detector" pkg="AY21_IGVC" type="whiteline_detector.py" /> -->
+
+  <node name="lane_following_module" pkg="AY21_IGVC" type="main.py" />
+
+  
+</launch>

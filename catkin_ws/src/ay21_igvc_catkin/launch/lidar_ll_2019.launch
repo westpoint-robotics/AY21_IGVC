@@ -1,0 +1,56 @@
+<launch>
+  <group ns="lidar">
+    <node pkg="ay21_igvc_catkin" type="interface" name="interface" output="screen">
+
+      <param name="cloud_rate" type="double" value="10.0"/>
+      <param name="status_rate" type="double" value="2.0"/>
+      <param name="native_unpack_rate" type="bool" value="true"/>
+
+      <param name="tf_time_offset" type="double" value="0.050"/>
+      <param name="use_dynamic_scan_tf" type="bool" value="true"/>
+      <param name="publish_unpack_tf" type="bool" value="true"/>
+      <param name="publish_sensor_tf" type="bool" value="true"/>      
+
+      <param name="vehicle_frame" type="string" value="rack_link"/>
+            
+      <param name="filter_filename" type="string" value="$(find ay21_igvc_catkin)/AY21_ws/launch/rtkstuff_config/calibrations/velodyne.filter"/>
+      
+      <param name="lower_filter_min_x" type="double" value="-0.6"/>
+      <param name="lower_filter_max_x" type="double" value="3.25"/>
+      <param name="lower_filter_min_y" type="double" value="-0.9"/>
+      <param name="lower_filter_max_y" type="double" value="0.9"/>
+      <param name="lower_filter_max_z" type="double" value="100.0"/>
+      
+      <param name="upper_filter_min_x" type="double" value="0.0"/>
+      <param name="upper_filter_max_x" type="double" value="0.0"/>
+      <param name="upper_filter_min_y" type="double" value="0.0"/>
+      <param name="upper_filter_max_y" type="double" value="0.0"/>
+
+      <param name="origin_to_ground" type="double" value="2.161"/>
+
+      <param name="v0_ip" type="string" value="192.168.1.10"/>
+      <param name="v0_model" type="string" value="HDL64E"/>
+      <param name="v0_x" type="double" value="0.235"/>
+      <param name="v0_y" type="double" value="0.00"/>
+      <param name="v0_z" type="double" value="2.402"/>
+      <param name="v0_yaw" type="double" value="0.00"/>
+      <param name="v0_pitch" type="double" value="0.00"/>
+      <param name="v0_roll" type="double" value="0.00"/>
+      <param name="v0_min_range" type="double" value="0.1"/>
+      <param name="v0_max_range" type="double" value="100.0"/>
+
+      <param name="v1_ip" type="string" value="192.168.1.10"/>
+      <param name="v1_model" type="string" value="HDL64E"/>
+      <param name="v1_x" type="double" value="0.235"/>
+      <param name="v1_y" type="double" value="0.00"/>
+      <param name="v1_z" type="double" value="2.402"/>
+      <param name="v1_yaw" type="double" value="180.00"/>
+      <param name="v1_pitch" type="double" value="0.00"/>
+      <param name="v1_roll" type="double" value="0.00"/>
+      <param name="v1_min_range" type="double" value="0.1"/>
+      <param name="v1_max_range" type="double" value="100.0"/>
+    
+    </node>
+  </group>
+</launch>
+

@@ -1,0 +1,7 @@
+classes= 16
+train  = ultimate/test/train.txt
+valid = ultimate/test/valid.txt
+test = ultimate/test/test.txt
+names = /home/user1/Desktop/igvc/catkin_ws/src/ay21_igvc_catkin/src/igvc_sw/stop_sign/custom_weights/new_ultimate.names
+backup = backup/
+

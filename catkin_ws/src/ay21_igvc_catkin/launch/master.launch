@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+
+    <!-- Remove std out except for INFO and WARN -->
+  <env name="ROSCONSOLE_CONFIG_FILE" value="$(find ay21_igvc_catkin)/config/console.conf"/>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  Arduino  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <node name="EStop_publisher" pkg="rosserial_python" type="serial_node.py">
+      <param name="port" value="/dev/ttyACM0"/>
+  </node>
+  
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  self-kill  ~~~~~~~~~~~~~~~~~~~~~~~~ --> 
+  <node name="self_kill_node" pkg="ay21_igvc_catkin" type="self_kill.py" />
+  
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  Camera  ~~~~~~~~~~~~~~~~~~~~~~~~ 
+  we might have to create a separate launch file bc this might overflow std out-->
+<!--  <include file="$(find ay21_igvc_catkin)/launch/fm_camera.launch"/>-->
+<!--  <include file="$(find ay21_igvc_catkin)/launch/fr_camera.launch"/>-->
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  XBox Controller  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <node pkg="joy" type="joy_node" name="joy">
+      <param name="coalesce_interval" type="double" value="0.02"/>
+      <param name="default_trig_val" value="true"/>
+      <param name="deadzone" value="0.0"/>
+  </node>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  TELEOP  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <include file="$(find ay21_igvc_catkin)/launch/pacmod_game_control.launch">
+    <arg name="controller_type" value="XBOX_ONE" />
+  </include>
+  
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  Constant Velocity Controller  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <node name="speed_controller" pkg="ay21_igvc_catkin" type="constVelocity.py" output="screen"/>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  Steering Controller  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<!--  <node name="right_lane_detector" pkg="ay21_igvc_catkin" type="rightLaneDetector.py" output = "screen" />-->
+  <node name="steering_controller" pkg="ay21_igvc_catkin" type="steeringController.py" />
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  Object Detection  ~~~~~~~~~~~~~~~~~~~~~~~~  -->
+  <node name="darknet_maeng" pkg="ay21_igvc_catkin" type="darknet_maeng.py"/>
+  
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  Lane Following  ~~~~~~~~~~~~~~~~~~~~~~~~-->>
+  <node name="lane_following_module" pkg="ay21_igvc_catkin" type="main_v2.py" output="screen"/>
+  
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  Vehicle Manager  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <node name="vehicle_manager_hl" pkg="ay21_igvc_catkin" type="vehicle_manager_hl.py" output="screen" required="True" />
+  
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  Self-drive Manager  ~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <node name="selfdrive_manager" pkg="ay21_igvc_catkin" type="selfdrive_node.py" output="screen" />
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~  User Input Handler ~~~~~~~~~~~~~~~~~~~~~~~~-->
+  <node name="user_input_node" pkg="ay21_igvc_catkin" type="user_input_node.py" output="screen" />
+  
+<!--  <node pkg="rosservice" type="rosservice" name="set_move_base_log_level" args="call wait /rosout/set_logger_level 'ros.move_base' 'info'" />-->
+  
+  
+  
+</launch>

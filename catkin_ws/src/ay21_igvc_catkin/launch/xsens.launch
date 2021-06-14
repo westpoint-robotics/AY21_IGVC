@@ -1,0 +1,40 @@
+<!-- USMA Xsens Fork -->
+ <launch>
+    <arg name="frame_id" default="imu_frame"/>
+
+    <arg name="frame_local" default="ENU"/>
+    <arg name="frame_local_imu" default="ENU"/>
+
+	<node pkg="xsens_driver" type="mtnode.py" name="xsens_driver" output="screen" >
+		<param name="frame_id" value="$(arg frame_id)"/>
+		<param name="frame_local" value="$(arg frame_local)"/>
+		<param name="frame_local_imu" value="$(arg frame_local_imu)"/>
+        	<remap from="/fix" to="/xgps/fix"/>   
+	        <!--<remap from="/imu/data" to="/ximu/raw"/> -->
+        	<param name="device" value="/dev/mti700"/>
+        	<param name="baudrate" value="115200"/>
+	</node>
+
+  <!--<node pkg="xsens_driver" type="xsensGlobal.py" name="xsensGlobal" ns="xsens" > -->
+
+  </node>
+
+  <!--<node pkg="imu_filter_madgwick" type="imu_filter_node" name="ImuFilterNodelet" 
+    output="screen" ns="filter">
+    <param name="use_mag" value="true"/>
+	<remap from="/imu/data" to="/ximu/raw"/>   
+    <remap from="/imu/mag" to="/magnetic"/> 
+  </node>-->
+
+  <!-- Laser Range Finder   -->
+    <!-- include file="$(find velodyne_bringup)/launch/igvc_velodyne.launch" />  -->
+    <!--<include file="$(find velodyne_pointcloud)/launch/64e_points.launch" />
+<node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne"
+        args="0 0 1.3952 0 0 0 ximu velodyne 100" /> -->
+        
+<!--<node pkg="tf" type="static_transform_publisher" name="odom_to_ximu"
+        args="0 0 0 0 0 0 odom ximu 100" />-->
+
+  <node pkg="rviz" type="rviz" output="screen" name="rviz" args="-d $(find xsens_driver)/launch/imu_global.rviz"/>  
+
+</launch>

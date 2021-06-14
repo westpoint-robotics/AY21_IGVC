@@ -1,0 +1,19 @@
+<launch>
+
+<!--    <node pkg="gem_description" name="odom" type="gem_description"/>-->
+
+    
+
+<!--    <node pkg="robot_setup_tf" name="tf_listener2" type="tf_listener2"/>-->
+    
+<!--    <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher3" args="0 0 0.29 0 0 0 1 base_link imu 100"/>-->
+<!--    -->
+<!--    <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher4" args="0 0 1.6852 0 0 0 1 base_link velodyne 100"/>-->
+
+    <node pkg="robot_setup_tf" name="tf_broadcaster" type="tf_broadcaster"/>
+
+<!--    <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher5" args="0 0 1.3952 0 0 0 1 imu velodyne 100"/>-->
+    
+    <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher6" args="0 0 0 0 0 0 1 map odom 100"/>
+
+</launch>

@@ -1,0 +1,9 @@
+<launch>
+ 
+ 
+<!--  <include file="$(find ay21_igvc_catkin)/launch/fm_camera.launch"/>-->
+
+
+  <node name="lane_following_module" pkg="ay21_igvc_catkin" type="main.py"/>
+  
+</launch>

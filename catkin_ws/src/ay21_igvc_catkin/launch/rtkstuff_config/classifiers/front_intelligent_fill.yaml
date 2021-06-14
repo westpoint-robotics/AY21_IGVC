@@ -1,0 +1,25 @@
+name: Test Classifier
+classifier_type: dtree
+max_depth: 20
+leaf_confidence_saturation: 10
+use_1se_rule: false
+feature_plugins:
+  - name: Intelligent Fill
+    type: feature_extraction_plugins/intelligent_fill_feature_processor_array
+    config:
+      image_array_topic: image_array
+      left_guid: 340064
+      right_guid: 340063
+      disparity_topic: /vision/front/disparity
+      histogram_window: 32
+      k: 16
+      min_x: 70
+      max_x: 600
+      min_y: 180
+      max_y: 360
+      is_color: true
+      min_disparity: 2
+      stereo_baseline: 0.5
+      camera_height: 1.75
+      fill: 20000
+      exact_sync: false
