@@ -10,7 +10,7 @@ Inteligent Ground Vehicle Competition: Self-Drive AY2021
 The USMA Autonomous Vehicle Research and Development (AVRAD) team develops, incorporates, and tests urban navigation modules to compete and win in the Intelligent Ground Vehicle Competition (IGVC) and integrates these functionalities within the Robotic Technology Kernel (RTK). ​
 ### Team Members
 * Brian Probert - Team Lead, Model & Simulation
-* HyunJin Lim   - SOftware Development and Testing
+* HyunJin Lim   - Software Development and Computer Vision
 * Joobon Maeng  - Software Lead, Dev. and Testing
 * Chloe DeWees  - Software Development and Testing
 * Donte Harris  - Networking/Hardware and Interface
